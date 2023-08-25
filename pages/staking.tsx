@@ -6,7 +6,9 @@ const Staking = () => {
   return (
     <>
     <Navbar/>
-    <div>Staking</div>
+    <div>
+      
+    </div>
     <SideBar/>
     </>
   )
