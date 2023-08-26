@@ -72,7 +72,7 @@ const Staking = () => {
                 />
               </div>
               <div>
-                <button type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm m-3 p-1 ps-3 pe-3 ">Max</button>
+                <button type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm m-3 p-1 ps-3 pe-3 ">Max</button>
               </div>
             </div>
 
@@ -84,7 +84,28 @@ const Staking = () => {
           </div>
 
         </div>
+
+        <div className="flex justify-center p-5" >
+          <div className=" max-w-lg p-3 bg-white border border-gray-200 rounded-lg shadow w-full">
+            <p className='text-xs font-medium pb-2' style={{ fontSize: "11px" }}>Claim/Unstake</p>
+            <div className="w-full flex justify-center items-center border border-gray-300  rounded" >
+              <button type="button" className="text-white  bg-red-700 hover:bg-red-800 m-[50px]  font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center ">Switch To Binance Smart Chain</button>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex justify-center p-5" >
+          <div className=" max-w-lg p-3 bg-white border border-gray-200 rounded-lg shadow w-full">
+            <p className='text-xs font-medium pb-2' style={{ fontSize: "11px" }}>Withdraw</p>
+            <div className="w-full flex justify-center items-center border border-gray-300  rounded" >
+              <button type="button" className="text-white  bg-red-700 hover:bg-red-800 m-[50px]  font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center ">Switch To Binance Smart Chain</button>
+            </div>
+          </div>
+        </div>
+
       </div>
+
+
 
     </>
   )

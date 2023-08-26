@@ -4,8 +4,10 @@ import Image from 'next/image'
 import Wallet from '../wallet-connect/Wallet.tsx'
 import nav_icon from "../../assets/nav-icon.png"
 
+
 const Navbar = () => {
     return (
+        <>
         <div className='bg-black'>
             <nav className="bg-black-800 ps-5 pe-5">
                 <div className="relative flex h-16 items-center justify-between">
@@ -28,6 +30,7 @@ const Navbar = () => {
             </nav>
 
         </div>
+        </>
     )
 }
 
