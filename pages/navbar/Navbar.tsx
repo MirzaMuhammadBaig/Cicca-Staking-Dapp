@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 
-import Wallet from '../wallet-connect/Wallet.tsx'
+import Wallet from '../../wallet-connect/Wallet.tsx'
 import nav_icon from "../../assets/nav-icon.png"
 
 

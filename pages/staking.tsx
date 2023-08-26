@@ -3,6 +3,7 @@ import SideBar from './sidebar/SideBar.tsx'
 import Image from 'next/image'
 import icon from "../assets/nav-icon.png"
 import { useEffect, useState } from 'react'
+import { ethers } from "ethers";
 import { BsArrowUpRight } from "react-icons/bs"
 
 import img from "../assets/stakePagePic.webp"
