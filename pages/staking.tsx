@@ -7,6 +7,7 @@ import { BsArrowUpRight } from "react-icons/bs"
 
 const Staking = () => {
   const [activeBtn, setActiceBtn] = useState<string | undefined>('')
+  const [activeIndex, setActiveIndex] = useState<null | string | number>(null);
 
   const handleOnclick = (btn: string) => {
     setActiceBtn(btn)
@@ -18,6 +19,33 @@ const Staking = () => {
 
   const isLinkBtn = (btn: string | undefined) => {
     return activeBtn === btn;
+  };
+
+  const faqs = [
+    {
+      question: 'What are SeiCloud Staking DApps?',
+      answer: "SeiCloud Staking DApps are decentralized applications that enable users to participate in the staking process of the SeiCloud network. By staking $SEICLOUD tokens, users contribute to the network's security, consensus, and overall functionality.",
+    },
+    {
+      question: 'How does Staking Work in SeiCloud?',
+      answer: 'Staking in SeiCloud involves locking a certain amount of $SEICLOUD tokens as collateral to support network operations. This contributes to transaction validation and security. In return, stakers receive rewards in the form of additional $SEICLOUD tokens.',
+    },
+    {
+      question: 'What are the Benefits of Staking in SeiCloud?',
+      answer: "Staking in SeiCloud offers a dual benefit: you earn rewards for your contribution to the network's health and security while supporting the ecosystem's growth. Additionally, you play a role in shaping the network's governance decisions.",
+    },
+    {
+      question: 'How Can I Stake My $SEICLOUD Tokens?',
+      answer: "To stake your $SEICLOUD tokens, interact with the Staking DApp on the SeiCloud platform. Connect your compatible wallet, choose the amount to stake, and confirm the transaction. Your staked tokens will contribute to the network's consensus."
+    },
+  ];
+
+  const toggleFAQ = (index: null | string | number) => {
+    if (activeIndex === index) {
+      setActiveIndex(null);
+    } else {
+      setActiveIndex(index);
+    }
   };
 
   return (
@@ -106,33 +134,25 @@ const Staking = () => {
 
         <div className="flex justify-center p-5" >
           <div className=" max-w-lg p-3 bg-white border border-gray-200 rounded-lg shadow w-full">
-            <p className='text-xs font-medium pb-2' style={{ fontSize: "11px" }}>FAQ</p>
-
-            <div className="max-w-3xl mx-auto space-y-4 ">
-              <div className="transition-all rounded-lg bg-white border border-gray-200 shadow-lg cursor-pointer hover:bg-gray-50">
-                <button type="button" className="flex items-center justify-between w-full px-4 py-5 sm:p-6">
-                  <span className="flex   text-black"> What are SeiCloud Staking DApps? </span>
-
-                  <svg className="w-6 h-6 text-gray-400 rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-
-                <div className="px-4 pb-5 font-thin sm:px-6 sm:pb-6">
-                  <p>SeiCloud Staking DApps are decentralized applications that enable users to participate in the staking process of the SeiCloud network. By staking $SEICLOUD tokens, users contribute to the network's security, consensus, and overall functionality.
-                  </p>
+            <p className='text-xs font-medium pb-2' style={{ fontSize: "11px" }}>FAQs</p>
+            {faqs.map((faq, index) => (
+              <div
+                key={index}
+                className="mb-2 border bg-white border-gray-200 rounded-lg cursor-pointer"
+                onClick={() => toggleFAQ(index)}
+              >
+                <div className="flex p-2 ps-4 pe-4 bg-white hover:bg-gray-50 justify-between items-center">
+                  <h3 className="text-xs font-small">{faq.question}</h3>
+                  <span className="text-gray-500">
+                    {activeIndex === index ? '-' : '+'}
+                  </span>
                 </div>
+                {activeIndex === index && <p className="mt-2 pb-2 ps-4 pe-4 bg-white text-xs font-thin text-black cursor-text">{faq.answer}</p>}
               </div>
-            </div>
+            ))}
           </div>
         </div>
-
-
-
       </div>
-
-
-
     </>
   )
 }
