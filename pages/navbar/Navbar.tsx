@@ -6,32 +6,27 @@ import nav_icon from "../../assets/nav-icon.png"
 
 
 const Navbar = () => {
-    return (
-        <>
-        <div className='bg-black'>
-            <nav className="bg-black-800 ps-5 pe-5">
-                <div className="relative flex h-16 items-center justify-between">
-                    <div className="flex flex-shrink-0 items-center">
-                        <Image
-                            className="h-8 w-auto"
-                            src={nav_icon}
-                            alt="Website Logo"
-                            width={180}
-                            height={37}
-                            priority
-                        />
-                        <p className='text-white'>SeiCloud</p>
-                    </div>
+  return (
+    <>
 
-                    <div className="absolute inset-y-0 right-0 flex items-center pr-2 ">
-                            <Wallet />
-                    </div>
-                </div>
-            </nav>
-
+      <nav className="bg-gray-900 flex border-gray-200 justify-between">
+        <div className="flex flex-wrap items-center ps-10 p-2">
+          <Image
+            className="h-8 w-auto"
+            src={nav_icon}
+            alt="Website Logo"
+            width={180}
+            height={37}
+            priority
+          />
+          <p className='text-white ps-1'>SeiCloud</p>
         </div>
-        </>
-    )
+        <div className="flex items-center pe-10 p-2">
+          <Wallet />
+        </div>
+      </nav>
+    </>
+  )
 }
 
 export default Navbar
