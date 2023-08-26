@@ -103,6 +103,32 @@ const Staking = () => {
           </div>
         </div>
 
+
+        <div className="flex justify-center p-5" >
+          <div className=" max-w-lg p-3 bg-white border border-gray-200 rounded-lg shadow w-full">
+            <p className='text-xs font-medium pb-2' style={{ fontSize: "11px" }}>FAQ</p>
+
+            <div className="max-w-3xl mx-auto space-y-4 ">
+              <div className="transition-all rounded-lg bg-white border border-gray-200 shadow-lg cursor-pointer hover:bg-gray-50">
+                <button type="button" className="flex items-center justify-between w-full px-4 py-5 sm:p-6">
+                  <span className="flex   text-black"> What are SeiCloud Staking DApps? </span>
+
+                  <svg className="w-6 h-6 text-gray-400 rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                <div className="px-4 pb-5 font-thin sm:px-6 sm:pb-6">
+                  <p>SeiCloud Staking DApps are decentralized applications that enable users to participate in the staking process of the SeiCloud network. By staking $SEICLOUD tokens, users contribute to the network's security, consensus, and overall functionality.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
       </div>
 
 
