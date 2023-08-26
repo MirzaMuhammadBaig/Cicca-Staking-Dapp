@@ -54,6 +54,7 @@ const Staking = () => {
       <SideBar />
       <div className=''>
         <div className="flex justify-center p-5" >
+          <div className='flex'>
           <div className="block max-w-lg p-3 bg-white border border-gray-200 rounded-lg shadow w-full">
             <div className='flex justify-between pb-3'>
               <p className='text-xs font-medium' style={{ fontSize: "11px" }}>Stake SeiCloud</p>
@@ -103,12 +104,23 @@ const Staking = () => {
                 <button type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm m-3 p-1 ps-3 pe-3 ">Max</button>
               </div>
             </div>
-
             <button type="submit" className="w-full mt-3 flex justify-center text-red-700 border border-red-700 hover:bg-gray-100 focus:outline-none  font-normal rounded-lg text-sm px-5 py-2.5 text-center" >SWITCH TO BINANACE SMART CHAIN
               <div className='ms-4 mt-1'>
                 <BsArrowUpRight />
               </div>
             </button>
+          </div>
+
+            {/* /////////////////////////////////// */}
+
+          <div className="flex justify-center p-5" >
+            <div className=" max-w-lg p-3 bg-white border border-gray-200 rounded-lg shadow w-full">
+              <p className='text-xs font-medium pb-2' style={{ fontSize: "11px" }}>Claim/Unstake</p>
+              <div className="w-full flex justify-center items-center border border-gray-300  rounded" >
+                <button type="button" className="text-white  bg-red-700 hover:bg-red-800 m-[50px]  font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center ">Switch To Binance Smart Chain</button>
+              </div>
+            </div>
+          </div>
           </div>
 
         </div>
