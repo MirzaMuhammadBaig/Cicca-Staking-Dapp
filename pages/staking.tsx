@@ -61,7 +61,7 @@ const Staking = () => {
       <Navbar />
       <div className='flex'>
         <SideBar />
-        <div className='flex flex-col w-full'>
+        <div className='flex flex-col w-full -ml-4 sm:'>
           <div className="flex justify-center p-5 ps-10 pe-1" >
             <div className="p-3 bg-white border border-gray-200 rounded-lg shadow w-full">
               <div className='flex justify-between pb-3 w-full'>
@@ -198,7 +198,7 @@ const Staking = () => {
           </div>
         </div>
 
-        <div className='flex'>
+        <div className='flex -ml-4'>
           <div className="ms-4 p-3 bg-white border border-gray-200 rounded-lg shadow m-5 h-max w-[25vw]">
             <div className='flex justify-between pb-3'>
               <p className='text-xs font-medium' style={{ fontSize: "14px" }}>SeiCloud Statistic</p>
