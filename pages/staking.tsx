@@ -7,10 +7,53 @@ import { ethers } from "ethers";
 import { BsArrowUpRight } from "react-icons/bs";
 
 import img from "../assets/stakePagePic.webp";
+import { AlchemyApiKey, ContractABI, ContractAddress } from "@/lib/constant.ts";
+
+// async function addWhiteListUser() {
+//   if (typeof window.ethereum !== "undefined") {
+//     setStatus("wait");
+//     if (ADDR.length < 42) {
+//       setStatus("Address Length less then 42 Character");
+//     } else if (ADDR.length > 42) {
+//       setStatus("Address Length greater then 42 Character");
+//     } else if (ADDR.length === 42) {
+//       try {
+//         const data = "0xD9D9AbDC7270b946c9f4112d9B927fa3Dd8E2A87";
+//         const providers = new ethers.providers.Web3Provider(window.ethereum);
+//         const signer = providers.getSigner();
+//         const contract = new ethers.Contract(data, ContractABI, signer);
+//         const sendTX = await contract.addWhiteListUser(ADDR);
+//         await sendTX.wait();
+//         const check = sendTX.toString();
+//         console.log(check);
+//         setStatus("Successfully Done");
+//       } catch (err) {
+//         if (addr === "") {
+//           setStatus("Gives Proper Data");
+//         } else {
+//           console.log(err);
+//           setStatus(err.error.message);
+//         }
+//       }
+//     } else {
+//       setStatus("Something Went Wrong ");
+//     }
+//   } else {
+//     setStatus("Not Working");
+//   }
+// }
 
 const Staking = () => {
   const [activeBtn, setActiceBtn] = useState<string | undefined>("");
   const [activeIndex, setActiveIndex] = useState<null | string | number>(null);
+
+  // read Use States
+  const [stakeAmount, setTotalStakedAmount] = useState<any>();
+  const [apy, setAPY] = useState<any>();
+  console.log("🚀 ~ file: staking.tsx:53 ~ Staking ~ apy:", apy);
+  const [firstTimeReward, setFirstTimeReward] = useState<any>();
+  const [stakeTime, setStakeTime] = useState<any>();
+  const [claimTime, setClaimTime] = useState<any>();
 
   const handleOnclick = (btn: string) => {
     setActiceBtn(btn);
@@ -18,11 +61,31 @@ const Staking = () => {
 
   useEffect(() => {
     setActiceBtn("1");
-    if ((window as any).ethereum) {
-      console.log("Ethereum", (window as any).ethereum.chainId);
-    } else {
-      console.log("Ethereum provider not detected.");
+    async function readSeiCloudStatistic() {
+      if ((window as any).ethereum) {
+        try {
+          const data = ContractAddress;
+          const provider = new ethers.providers.Web3Provider(
+            (window as any).ethereum
+          );
+          const signer = provider.getSigner();
+          const contract = new ethers.Contract(data, ContractABI, signer);
+          const totalStakedAmount = await contract.totalStakedAmount();
+          setTotalStakedAmount(totalStakedAmount);
+          const APY = await contract.APY();
+          setAPY(APY);
+          const firstTimeReward = await contract.FirstTimeReward();
+          setFirstTimeReward(firstTimeReward);
+          const stakeTime = await contract.StakeTime();
+          setStakeTime(stakeTime);
+          const claimTime = await contract.claimTime();
+          setClaimTime(claimTime);
+        } catch (err: any) {
+          console.log("Error", err);
+        }
+      }
     }
+    readSeiCloudStatistic();
   }, []);
 
   const isLinkBtn = (btn: string | undefined) => {
@@ -60,6 +123,23 @@ const Staking = () => {
     }
   };
 
+  async function readSeiCloudStatistic() {
+    if ((window as any).ethereum) {
+      try {
+        const data = ContractAddress;
+        const provider = new ethers.providers.Web3Provider(
+          (window as any).ethereum
+        );
+        const signer = provider.getSigner();
+        const contract = new ethers.Contract(data, ContractABI, signer);
+        const sendTX = await contract.totalStakedAmount();
+        console.log("🚀~ sendTX:", sendTX);
+      } catch (err: any) {
+        console.log("Error", err);
+      }
+    }
+  }
+
   return (
     <>
       <Navbar />
@@ -69,6 +149,9 @@ const Staking = () => {
           {/* First Column */}
           <div className="flex">
             <div className="flex flex-col w-full -ml-4">
+              <button className="bg-red-300 " onClick={readSeiCloudStatistic}>
+                Click
+              </button>
               <div className="flex justify-center p-5 ps-10 pe-1">
                 <div className="p-3 bg-white border border-gray-200 rounded-lg shadow w-full">
                   <div className="flex justify-between pb-3 w-full">
@@ -366,7 +449,6 @@ const Staking = () => {
                   SeiCloud Statistic
                 </p>
                 <p className="text-gray-700" style={{ fontSize: "13px" }}>
-                  {" "}
                   <a href="https://seicloud.io/staking" target="blank">
                     View on Seiscan
                   </a>
@@ -374,12 +456,10 @@ const Staking = () => {
               </div>
               <div className="flex justify-between pb-3">
                 <p className="text-gray-700 pe-3" style={{ fontSize: "13px" }}>
-                  {" "}
                   Total staked with SeiCloud
                 </p>
                 <p className="text-gray-700 ps-3" style={{ fontSize: "13px" }}>
-                  {" "}
-                  0 SeiCloud
+                  {String(stakeAmount)} SeiCloud
                 </p>
               </div>
               <div className="flex justify-between pb-3">
@@ -394,12 +474,10 @@ const Staking = () => {
               </div>
               <div className="flex justify-between pb-3">
                 <p className="text-gray-700" style={{ fontSize: "13px" }}>
-                  {" "}
                   APY
                 </p>
                 <p className="text-gray-700" style={{ fontSize: "13px" }}>
-                  {" "}
-                  3500
+                  {String(apy)}
                 </p>
               </div>
               <div className="flex justify-between pb-3">
@@ -407,7 +485,7 @@ const Staking = () => {
                   First Time Reward
                 </p>
                 <p className="text-gray-700" style={{ fontSize: "13px" }}>
-                  3
+                  {String(firstTimeReward)}
                 </p>
               </div>
               <div className="flex justify-between pb-3">
@@ -415,7 +493,7 @@ const Staking = () => {
                   Stake Time
                 </p>
                 <p className="text-gray-700" style={{ fontSize: "13px" }}>
-                  31536000
+                  {String(stakeTime)}
                 </p>
               </div>
               <div className="flex justify-between pb-3">
@@ -423,7 +501,7 @@ const Staking = () => {
                   Claim Time
                 </p>
                 <p className="text-gray-700" style={{ fontSize: "13px" }}>
-                  3888000
+                  {String(claimTime)}
                 </p>
               </div>
               <div className="flex justify-center ">
