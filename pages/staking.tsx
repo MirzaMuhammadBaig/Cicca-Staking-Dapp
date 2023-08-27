@@ -9,6 +9,12 @@ import { useAccount, useConnect, useNetwork, useSwitchNetwork } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import img from "../assets/stakePagePic.webp";
 import { ContractABI, ContractAddress } from "@/lib/constant.ts";
+import UnStake from "./write/unstake.tsx";
+import ClaimMonthlyReward from "./write/claimMonthlyRewars.tsx";
+import WithdrawAll from "./write/withdrawAll.tsx";
+import WithdrawTokenWithAmount from "./write/withdrawTokenWithAmount.tsx";
+import ClearStuckBNBBalance from "./write/clearStuckBNBBalance.tsx";
+import UserStakeInfos from "./write/userStakeInfos.tsx";
 
 const Staking = () => {
   // wagmi hooks
@@ -17,15 +23,15 @@ const Staking = () => {
   const { chain } = useNetwork();
   const { connect } = useConnect();
 
-  const [activeBtn, setActiceBtn] = useState<string | undefined>("");
-  const [activeIndex, setActiveIndex] = useState<null | string | number>(null);
-
   // read Use States
   const [stakeAmount, setTotalStakedAmount] = useState<any>("");
   const [apy, setAPY] = useState<any>("");
   const [firstTimeReward, setFirstTimeReward] = useState<any>("");
   const [stakeTime, setStakeTime] = useState<any>("");
   const [claimTime, setClaimTime] = useState<any>("");
+
+  const [activeBtn, setActiceBtn] = useState<string | undefined>("");
+  const [activeIndex, setActiveIndex] = useState<null | string | number>(null);
 
   const handleOnclick = (btn: string) => {
     setActiceBtn(btn);
@@ -278,7 +284,7 @@ const Staking = () => {
                   </div>
                 </div>
               </div>
-
+              {/* UnStake */}
               <div className="flex justify-center p-5 pt-0 ps-10 pe-1">
                 <div className="p-5 pt-3 bg-white border border-gray-200 rounded-lg shadow w-full">
                   <p
@@ -289,13 +295,7 @@ const Staking = () => {
                   </p>
                   {address && chain?.id === 56 ? (
                     <div className="w-full flex justify-center items-center border border-gray-300 rounded">
-                      <button
-                        type="submit"
-                        onClick={() => switchNetwork?.(56)}
-                        className="text-white bg-red-700 hover:bg-red-800 m-[50px] font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center"
-                      >
-                        Claim/Unstake
-                      </button>
+                      <UnStake />
                     </div>
                   ) : address && chain?.id !== 56 ? (
                     <div className="w-full flex justify-center items-center border border-gray-300 rounded">
@@ -322,6 +322,7 @@ const Staking = () => {
                 </div>
               </div>
 
+              {/* Claim Monthly Reward */}
               <div className="flex justify-center p-5 pt-0 ps-10 pe-1">
                 <div className="p-5 pt-3 bg-white border border-gray-200 rounded-lg shadow w-full">
                   <p
@@ -332,13 +333,7 @@ const Staking = () => {
                   </p>
                   {address && chain?.id === 56 ? (
                     <div className="w-full flex justify-center items-center border border-gray-300 rounded">
-                      <button
-                        type="submit"
-                        onClick={() => switchNetwork?.(56)}
-                        className="text-white bg-red-700 hover:bg-red-800 m-[50px] font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center"
-                      >
-                        Claim/Unstake
-                      </button>
+                      <ClaimMonthlyReward />
                     </div>
                   ) : address && chain?.id !== 56 ? (
                     <div className="w-full flex justify-center items-center border border-gray-300 rounded">
@@ -365,6 +360,7 @@ const Staking = () => {
                 </div>
               </div>
 
+              {/* withdraw All */}
               <div className="flex justify-center p-5 pt-0 ps-10 pe-1">
                 <div className="p-5 pt-3 bg-white border border-gray-200 rounded-lg shadow w-full">
                   <p
@@ -375,13 +371,7 @@ const Staking = () => {
                   </p>
                   {address && chain?.id === 56 ? (
                     <div className="w-full flex justify-center items-center border border-gray-300 rounded">
-                      <button
-                        type="submit"
-                        onClick={() => switchNetwork?.(56)}
-                        className="text-white bg-red-700 hover:bg-red-800 m-[50px] font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center"
-                      >
-                        Claim/Unstake
-                      </button>
+                      <WithdrawAll />
                     </div>
                   ) : address && chain?.id !== 56 ? (
                     <div className="w-full flex justify-center items-center border border-gray-300 rounded">
@@ -418,13 +408,7 @@ const Staking = () => {
                   </p>
                   {address && chain?.id === 56 ? (
                     <div className="w-full flex justify-center items-center border border-gray-300 rounded">
-                      <button
-                        type="submit"
-                        onClick={() => switchNetwork?.(56)}
-                        className="text-white bg-red-700 hover:bg-red-800 m-[50px] font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center"
-                      >
-                        Claim/Unstake
-                      </button>
+                      <WithdrawTokenWithAmount />
                     </div>
                   ) : address && chain?.id !== 56 ? (
                     <div className="w-full flex justify-center items-center border border-gray-300 rounded">
@@ -461,13 +445,7 @@ const Staking = () => {
                   </p>
                   {address && chain?.id === 56 ? (
                     <div className="w-full flex justify-center items-center border border-gray-300 rounded">
-                      <button
-                        type="submit"
-                        onClick={() => switchNetwork?.(56)}
-                        className="text-white bg-red-700 hover:bg-red-800 m-[50px] font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center"
-                      >
-                        Claim/Unstake
-                      </button>
+                      <ClearStuckBNBBalance />
                     </div>
                   ) : address && chain?.id !== 56 ? (
                     <div className="w-full flex justify-center items-center border border-gray-300 rounded">
@@ -504,13 +482,7 @@ const Staking = () => {
                   </p>
                   {address && chain?.id === 56 ? (
                     <div className="w-full flex justify-center items-center border border-gray-300 rounded">
-                      <button
-                        type="submit"
-                        onClick={() => switchNetwork?.(56)}
-                        className="text-white bg-red-700 hover:bg-red-800 m-[50px] font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center"
-                      >
-                        Claim/Unstake
-                      </button>
+                      <UserStakeInfos />
                     </div>
                   ) : address && chain?.id !== 56 ? (
                     <div className="w-full flex justify-center items-center border border-gray-300 rounded">
