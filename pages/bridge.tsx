@@ -9,14 +9,19 @@ const Bridge = () => {
   return (
     <>
       <Navbar />
-      <SideBar />
 
       <div >
-        <div className="flex items-center justify-center p-5">
-          <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg">
-              <Image className="p-8 rounded-t-lg" src={img} alt="bridge image" />
-            <div className=" pb-5">
-                <h5 className="text-xl text-center font-semibold tracking-tight text-black">Bridge Will Come Soon</h5>             
+        <div className="flex items-center justify-center pt-10">
+          <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg hover:shadow-xl shadow-lg p-8 pb-0">
+            <Image className="rounded-lg hover:shadow-lg " src={img} alt="bridge image" />
+            <div className="pb-5 pt-3">
+              <h5 className="text-xl text-center font-semibold tracking-tight text-black">Bridging Will Come Soon</h5>
+            </div>
+            <div className='ps-4 pe-4'>
+              <hr /><hr />
+            </div>
+            <div className='flex items-center justify-center'>
+              <SideBar />
             </div>
           </div>
         </div>

@@ -18,6 +18,11 @@ const Staking = () => {
 
   useEffect(() => {
     setActiceBtn("1")
+    if ((window as any).ethereum) {
+      console.log("Ethereum", (window as any).ethereum.chainId);
+    } else {
+      console.log("Ethereum provider not detected.");
+    }
   }, [])
 
   const isLinkBtn = (btn: string | undefined) => {
@@ -97,7 +102,7 @@ const Staking = () => {
                     type="text"
                     name="amount"
                     id="amount"
-                    className="text-black text-xs rounded-lg block w-max mt-1.5 pt-2 p-2.5 focus:outline-none"
+                    className="text-black text-xs rounded-lg block w-auto mt-1.5 pt-2 p-2.5 focus:outline-none"
                     placeholder="Amount"
                     style={{ background: "rgba(241, 245, 249, 255)" }}
                     required
@@ -128,13 +133,48 @@ const Staking = () => {
 
           <div className="flex justify-center p-5 pt-0 ps-10 pe-1" >
             <div className="p-5 pt-3 bg-white border border-gray-200 rounded-lg shadow w-full">
-              <p className='text-xs font-medium pb-2' style={{ fontSize: "14px" }}>Withdraw</p>
+              <p className='text-xs font-medium pb-2' style={{ fontSize: "14px" }}>Claim Monthly Reward</p>
               <div className="w-full flex justify-center items-center border border-gray-300  rounded" >
                 <button type="button" className="text-white  bg-red-700 hover:bg-red-800 m-[50px]  font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center ">Switch To Binance Smart Chain</button>
               </div>
             </div>
           </div>
 
+          <div className="flex justify-center p-5 pt-0 ps-10 pe-1" >
+            <div className="p-5 pt-3 bg-white border border-gray-200 rounded-lg shadow w-full">
+              <p className='text-xs font-medium pb-2' style={{ fontSize: "14px" }}>Withdraw All</p>
+              <div className="w-full flex justify-center items-center border border-gray-300  rounded" >
+                <button type="button" className="text-white  bg-red-700 hover:bg-red-800 m-[50px]  font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center ">Switch To Binance Smart Chain</button>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex justify-center p-5 pt-0 ps-10 pe-1" >
+            <div className="p-5 pt-3 bg-white border border-gray-200 rounded-lg shadow w-full">
+              <p className='text-xs font-medium pb-2' style={{ fontSize: "14px" }}>Withdraw Specific Amount</p>
+              <div className="w-full flex justify-center items-center border border-gray-300  rounded" >
+                <button type="button" className="text-white  bg-red-700 hover:bg-red-800 m-[50px]  font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center ">Switch To Binance Smart Chain</button>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex justify-center p-5 pt-0 ps-10 pe-1" >
+            <div className="p-5 pt-3 bg-white border border-gray-200 rounded-lg shadow w-full">
+              <p className='text-xs font-medium pb-2' style={{ fontSize: "14px" }}>Clear Stuck BNB Balance</p>
+              <div className="w-full flex justify-center items-center border border-gray-300  rounded" >
+                <button type="button" className="text-white  bg-red-700 hover:bg-red-800 m-[50px]  font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center ">Switch To Binance Smart Chain</button>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex justify-center p-5 pt-0 ps-10 pe-1" >
+            <div className="p-5 pt-3 bg-white border border-gray-200 rounded-lg shadow w-full">
+              <p className='text-xs font-medium pb-2' style={{ fontSize: "14px" }}>Get User Stake Info</p>
+              <div className="w-full flex justify-center items-center border border-gray-300  rounded" >
+                <button type="button" className="text-white  bg-red-700 hover:bg-red-800 m-[50px]  font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center ">Switch To Binance Smart Chain</button>
+              </div>
+            </div>
+          </div>
 
           <div className="flex justify-center p-5 pt-0 ps-10 pe-1" >
             <div className="p-5 pt-3 bg-white border border-gray-200 rounded-lg shadow w-full">
@@ -159,26 +199,34 @@ const Staking = () => {
         </div>
 
         <div className='flex'>
-          <div className="ms-4 p-3 bg-white border border-gray-200 rounded-lg shadow m-5 h-max w-max">
+          <div className="ms-4 p-3 bg-white border border-gray-200 rounded-lg shadow m-5 h-max w-[25vw]">
             <div className='flex justify-between pb-3'>
               <p className='text-xs font-medium' style={{ fontSize: "14px" }}>SeiCloud Statistic</p>
               <p className='text-gray-700' style={{ fontSize: "13px" }}> <a href="https://seicloud.io/staking" target='blank'>View on Seiscan</a></p>
             </div>
             <div className='flex justify-between pb-3'>
               <p className='text-gray-700 pe-3' style={{ fontSize: "13px" }}> Total staked with SeiCloud</p>
-              <p className='text-gray-700 ps-3' style={{ fontSize: "13px" }}> 2,640,429.14 SeiCloud</p>
-            </div>
-            <div className='flex justify-between pb-3'>
-              <p className='text-gray-700' style={{ fontSize: "13px" }}> Stakers</p>
-              <p className='text-gray-700' style={{ fontSize: "13px" }}> 55</p>
+              <p className='text-gray-700 ps-3' style={{ fontSize: "13px" }}> 0 SeiCloud</p>
             </div>
             <div className='flex justify-between pb-3'>
               <p className='text-gray-700' style={{ fontSize: "13px" }}> SeiCloud market cap</p>
               <p className='text-gray-700' style={{ fontSize: "13px" }}> $0</p>
             </div>
             <div className='flex justify-between pb-3'>
-              <p className='text-gray-700' style={{ fontSize: "13px" }}> Unstake Fee</p>
-              <p className='text-gray-700' style={{ fontSize: "13px" }}> 25%</p>
+              <p className='text-gray-700' style={{ fontSize: "13px" }}> APY</p>
+              <p className='text-gray-700' style={{ fontSize: "13px" }}> 3500</p>
+            </div>
+            <div className='flex justify-between pb-3'>
+              <p className='text-gray-700' style={{ fontSize: "13px" }}> First Time Reward</p>
+              <p className='text-gray-700' style={{ fontSize: "13px" }}> 3</p>
+            </div>
+            <div className='flex justify-between pb-3'>
+              <p className='text-gray-700' style={{ fontSize: "13px" }}> Stake Time</p>
+              <p className='text-gray-700' style={{ fontSize: "13px" }}> 31536000</p>
+            </div>
+            <div className='flex justify-between pb-3'>
+              <p className='text-gray-700' style={{ fontSize: "13px" }}> Claim Time</p>
+              <p className='text-gray-700' style={{ fontSize: "13px" }}> 3888000</p>
             </div>
             <div className='flex justify-center '>
               <Image src={img} alt="img" className='h-[150px] w-[130px]'></Image>

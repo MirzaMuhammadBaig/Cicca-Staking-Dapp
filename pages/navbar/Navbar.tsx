@@ -8,7 +8,6 @@ import nav_icon from "../../assets/nav-icon.png"
 const Navbar = () => {
   return (
     <>
-
       <nav className="bg-gray-900 flex border-gray-200 justify-between">
         <div className="flex flex-wrap items-center ps-10 p-2">
           <Image
