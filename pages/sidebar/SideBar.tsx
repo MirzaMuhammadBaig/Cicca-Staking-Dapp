@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 
 const SideBar = () => {
   const [activeLink, setActiveLink] = useState<string | undefined>("");
-  const [open, setOpen] = useState<any>(false);
+
   const router = useRouter();
   const [] = useState();
 
@@ -29,14 +29,10 @@ const SideBar = () => {
     return activeLink === link;
   };
 
-  const toggleOpen = () => {
-    setOpen((prevOpen: any) => !prevOpen); // Using the functional update form
-  };
-
   return (
     <>
       <div>
-        <button
+        {/* <button
           data-drawer-target="default-sidebar"
           data-drawer-toggle="default-sidebar"
           aria-controls="default-sidebar"
@@ -58,16 +54,11 @@ const SideBar = () => {
               d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
             ></path>
           </svg>
-        </button>
+        </button> */}
 
         <aside
           id="default-sidebar"
-          onClick={toggleOpen}
-          className={`${
-            open
-              ? "top-0 bg-white left-0 absolute md:relative h-full z-40 w-64 transition-transform translate-x-0 text-black"
-              : "top-0 bg-white left-0 absolute md:relative h-full z-40 w-64 transition-transform -translate-x-full sm:translate-x-0 text-black"
-          }`}
+          className={`${"top-0 bg-white left-0 absolute md:relative h-full z-40 w-64 transition-transform -translate-x-full sm:translate-x-0 text-black"}`}
           aria-label="Sidebar"
         >
           <div className="h-full px-3 py-4 overflow-y-auto ">
