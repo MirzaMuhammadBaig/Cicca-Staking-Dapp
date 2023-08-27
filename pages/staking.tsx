@@ -5,55 +5,27 @@ import icon from "../assets/nav-icon.png";
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { BsArrowUpRight } from "react-icons/bs";
-
+import { useAccount, useConnect, useNetwork, useSwitchNetwork } from "wagmi";
+import { InjectedConnector } from "wagmi/connectors/injected";
 import img from "../assets/stakePagePic.webp";
-import { AlchemyApiKey, ContractABI, ContractAddress } from "@/lib/constant.ts";
-
-// async function addWhiteListUser() {
-//   if (typeof window.ethereum !== "undefined") {
-//     setStatus("wait");
-//     if (ADDR.length < 42) {
-//       setStatus("Address Length less then 42 Character");
-//     } else if (ADDR.length > 42) {
-//       setStatus("Address Length greater then 42 Character");
-//     } else if (ADDR.length === 42) {
-//       try {
-//         const data = "0xD9D9AbDC7270b946c9f4112d9B927fa3Dd8E2A87";
-//         const providers = new ethers.providers.Web3Provider(window.ethereum);
-//         const signer = providers.getSigner();
-//         const contract = new ethers.Contract(data, ContractABI, signer);
-//         const sendTX = await contract.addWhiteListUser(ADDR);
-//         await sendTX.wait();
-//         const check = sendTX.toString();
-//         console.log(check);
-//         setStatus("Successfully Done");
-//       } catch (err) {
-//         if (addr === "") {
-//           setStatus("Gives Proper Data");
-//         } else {
-//           console.log(err);
-//           setStatus(err.error.message);
-//         }
-//       }
-//     } else {
-//       setStatus("Something Went Wrong ");
-//     }
-//   } else {
-//     setStatus("Not Working");
-//   }
-// }
+import { ContractABI, ContractAddress } from "@/lib/constant.ts";
 
 const Staking = () => {
+  // wagmi hooks
+  const { address } = useAccount();
+  const { switchNetwork } = useSwitchNetwork();
+  const { chain } = useNetwork();
+  const { connect } = useConnect();
+
   const [activeBtn, setActiceBtn] = useState<string | undefined>("");
   const [activeIndex, setActiveIndex] = useState<null | string | number>(null);
 
   // read Use States
-  const [stakeAmount, setTotalStakedAmount] = useState<any>();
-  const [apy, setAPY] = useState<any>();
-  console.log("🚀 ~ file: staking.tsx:53 ~ Staking ~ apy:", apy);
-  const [firstTimeReward, setFirstTimeReward] = useState<any>();
-  const [stakeTime, setStakeTime] = useState<any>();
-  const [claimTime, setClaimTime] = useState<any>();
+  const [stakeAmount, setTotalStakedAmount] = useState<any>("");
+  const [apy, setAPY] = useState<any>("");
+  const [firstTimeReward, setFirstTimeReward] = useState<any>("");
+  const [stakeTime, setStakeTime] = useState<any>("");
+  const [claimTime, setClaimTime] = useState<any>("");
 
   const handleOnclick = (btn: string) => {
     setActiceBtn(btn);
@@ -61,27 +33,32 @@ const Staking = () => {
 
   useEffect(() => {
     setActiceBtn("1");
+
     async function readSeiCloudStatistic() {
       if ((window as any).ethereum) {
-        try {
-          const data = ContractAddress;
-          const provider = new ethers.providers.Web3Provider(
-            (window as any).ethereum
-          );
-          const signer = provider.getSigner();
-          const contract = new ethers.Contract(data, ContractABI, signer);
-          const totalStakedAmount = await contract.totalStakedAmount();
-          setTotalStakedAmount(totalStakedAmount);
-          const APY = await contract.APY();
-          setAPY(APY);
-          const firstTimeReward = await contract.FirstTimeReward();
-          setFirstTimeReward(firstTimeReward);
-          const stakeTime = await contract.StakeTime();
-          setStakeTime(stakeTime);
-          const claimTime = await contract.claimTime();
-          setClaimTime(claimTime);
-        } catch (err: any) {
-          console.log("Error", err);
+        if (chain?.id === 56) {
+          try {
+            const data = ContractAddress;
+            const provider = new ethers.providers.Web3Provider(
+              (window as any).ethereum
+            );
+            const signer = provider.getSigner();
+            const contract = new ethers.Contract(data, ContractABI, signer);
+            const totalStakedAmount = await contract.totalStakedAmount();
+            setTotalStakedAmount(totalStakedAmount);
+            const APY = await contract.APY();
+            setAPY(APY);
+            const firstTimeReward = await contract.FirstTimeReward();
+            setFirstTimeReward(firstTimeReward);
+            const stakeTime = await contract.StakeTime();
+            setStakeTime(stakeTime);
+            const claimTime = await contract.claimTime();
+            setClaimTime(claimTime);
+          } catch (err: any) {
+            console.log("Error", err);
+          }
+        } else {
+          console.log("Connect to Binance Chain");
         }
       }
     }
@@ -123,35 +100,15 @@ const Staking = () => {
     }
   };
 
-  async function readSeiCloudStatistic() {
-    if ((window as any).ethereum) {
-      try {
-        const data = ContractAddress;
-        const provider = new ethers.providers.Web3Provider(
-          (window as any).ethereum
-        );
-        const signer = provider.getSigner();
-        const contract = new ethers.Contract(data, ContractABI, signer);
-        const sendTX = await contract.totalStakedAmount();
-        console.log("🚀~ sendTX:", sendTX);
-      } catch (err: any) {
-        console.log("Error", err);
-      }
-    }
-  }
-
   return (
     <>
       <Navbar />
       <div className="sm:flex ">
         <SideBar />
-        <div className="sm:flex justify-center w-full ">
+        <div className="sm:flex justify-center w-full">
           {/* First Column */}
           <div className="flex">
             <div className="flex flex-col w-full -ml-4">
-              <button className="bg-red-300 " onClick={readSeiCloudStatistic}>
-                Click
-              </button>
               <div className="flex justify-center p-5 ps-10 pe-1">
                 <div className="p-3 bg-white border border-gray-200 rounded-lg shadow w-full">
                   <div className="flex justify-between pb-3 w-full">
@@ -283,15 +240,42 @@ const Staking = () => {
                       </button>
                     </div>
                   </div>
-                  <button
-                    type="submit"
-                    className="w-full mt-3 flex justify-center text-red-700 border border-red-700 hover:bg-gray-100 focus:outline-none  font-normal rounded-lg text-sm px-5 py-2.5 text-center"
-                  >
-                    SWITCH TO BINANACE SMART CHAIN
-                    <div className="ms-4 mt-1">
-                      <BsArrowUpRight />
-                    </div>
-                  </button>
+                  <div>
+                    {address && chain?.id === 56 ? (
+                      <button
+                        type="submit"
+                        onClick={() => switchNetwork?.(56)}
+                        className="w-full mt-3 flex justify-center text-red-700 border border-red-700 hover:bg-gray-100 focus:outline-none font-normal rounded-lg text-sm px-5 py-2.5 text-center"
+                      >
+                        Stake
+                        <div className="ms-4 mt-1">
+                          <BsArrowUpRight />
+                        </div>
+                      </button>
+                    ) : address && chain?.id !== 56 ? (
+                      <button
+                        type="submit"
+                        onClick={() => switchNetwork?.(56)}
+                        className="w-full mt-3 flex justify-center text-red-700 border border-red-700 hover:bg-gray-100 focus:outline-none font-normal rounded-lg text-sm px-5 py-2.5 text-center"
+                      >
+                        SWITCH TO BINANCE SMART CHAIN
+                        <div className="ms-4 mt-1">
+                          <BsArrowUpRight />
+                        </div>
+                      </button>
+                    ) : (
+                      <>
+                        <button
+                          onClick={() =>
+                            connect({ connector: new InjectedConnector() })
+                          }
+                          className="w-full mt-3 flex justify-center text-red-700 border border-red-700 hover:bg-gray-100 focus:outline-none font-normal rounded-lg text-sm px-5 py-2.5 text-center"
+                        >
+                          Connect wallet
+                        </button>
+                      </>
+                    )}
+                  </div>
                 </div>
               </div>
 
@@ -303,14 +287,38 @@ const Staking = () => {
                   >
                     Claim/Unstake
                   </p>
-                  <div className="w-full flex justify-center items-center border border-gray-300 rounded">
-                    <button
-                      type="button"
-                      className="text-white  bg-red-700 hover:bg-red-800 m-[50px]  font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center "
-                    >
-                      Switch To Binance Smart Chain
-                    </button>
-                  </div>
+                  {address && chain?.id === 56 ? (
+                    <div className="w-full flex justify-center items-center border border-gray-300 rounded">
+                      <button
+                        type="submit"
+                        onClick={() => switchNetwork?.(56)}
+                        className="text-white bg-red-700 hover:bg-red-800 m-[50px] font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center"
+                      >
+                        Claim/Unstake
+                      </button>
+                    </div>
+                  ) : address && chain?.id !== 56 ? (
+                    <div className="w-full flex justify-center items-center border border-gray-300 rounded">
+                      <button
+                        type="submit"
+                        onClick={() => switchNetwork?.(56)}
+                        className="text-white bg-red-700 hover:bg-red-800 m-[50px] font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center"
+                      >
+                        Switch To Binance Smart Chain
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="w-full flex justify-center items-center border border-gray-300 rounded">
+                      <button
+                        onClick={() =>
+                          connect({ connector: new InjectedConnector() })
+                        }
+                        className="text-white bg-red-700 hover:bg-red-800 m-[50px] font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center"
+                      >
+                        Connect wallet
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -322,14 +330,38 @@ const Staking = () => {
                   >
                     Claim Monthly Reward
                   </p>
-                  <div className="w-full flex justify-center items-center border border-gray-300  rounded">
-                    <button
-                      type="button"
-                      className="text-white  bg-red-700 hover:bg-red-800 m-[50px]  font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center "
-                    >
-                      Switch To Binance Smart Chain
-                    </button>
-                  </div>
+                  {address && chain?.id === 56 ? (
+                    <div className="w-full flex justify-center items-center border border-gray-300 rounded">
+                      <button
+                        type="submit"
+                        onClick={() => switchNetwork?.(56)}
+                        className="text-white bg-red-700 hover:bg-red-800 m-[50px] font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center"
+                      >
+                        Claim/Unstake
+                      </button>
+                    </div>
+                  ) : address && chain?.id !== 56 ? (
+                    <div className="w-full flex justify-center items-center border border-gray-300 rounded">
+                      <button
+                        type="submit"
+                        onClick={() => switchNetwork?.(56)}
+                        className="text-white bg-red-700 hover:bg-red-800 m-[50px] font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center"
+                      >
+                        Switch To Binance Smart Chain
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="w-full flex justify-center items-center border border-gray-300 rounded">
+                      <button
+                        onClick={() =>
+                          connect({ connector: new InjectedConnector() })
+                        }
+                        className="text-white bg-red-700 hover:bg-red-800 m-[50px] font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center"
+                      >
+                        Connect wallet
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -341,14 +373,38 @@ const Staking = () => {
                   >
                     Withdraw All
                   </p>
-                  <div className="w-full flex justify-center items-center border border-gray-300  rounded">
-                    <button
-                      type="button"
-                      className="text-white  bg-red-700 hover:bg-red-800 m-[50px]  font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center "
-                    >
-                      Switch To Binance Smart Chain
-                    </button>
-                  </div>
+                  {address && chain?.id === 56 ? (
+                    <div className="w-full flex justify-center items-center border border-gray-300 rounded">
+                      <button
+                        type="submit"
+                        onClick={() => switchNetwork?.(56)}
+                        className="text-white bg-red-700 hover:bg-red-800 m-[50px] font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center"
+                      >
+                        Claim/Unstake
+                      </button>
+                    </div>
+                  ) : address && chain?.id !== 56 ? (
+                    <div className="w-full flex justify-center items-center border border-gray-300 rounded">
+                      <button
+                        type="submit"
+                        onClick={() => switchNetwork?.(56)}
+                        className="text-white bg-red-700 hover:bg-red-800 m-[50px] font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center"
+                      >
+                        Switch To Binance Smart Chain
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="w-full flex justify-center items-center border border-gray-300 rounded">
+                      <button
+                        onClick={() =>
+                          connect({ connector: new InjectedConnector() })
+                        }
+                        className="text-white bg-red-700 hover:bg-red-800 m-[50px] font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center"
+                      >
+                        Connect wallet
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -360,14 +416,38 @@ const Staking = () => {
                   >
                     Withdraw Specific Amount
                   </p>
-                  <div className="w-full flex justify-center items-center border border-gray-300  rounded">
-                    <button
-                      type="button"
-                      className="text-white  bg-red-700 hover:bg-red-800 m-[50px]  font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center "
-                    >
-                      Switch To Binance Smart Chain
-                    </button>
-                  </div>
+                  {address && chain?.id === 56 ? (
+                    <div className="w-full flex justify-center items-center border border-gray-300 rounded">
+                      <button
+                        type="submit"
+                        onClick={() => switchNetwork?.(56)}
+                        className="text-white bg-red-700 hover:bg-red-800 m-[50px] font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center"
+                      >
+                        Claim/Unstake
+                      </button>
+                    </div>
+                  ) : address && chain?.id !== 56 ? (
+                    <div className="w-full flex justify-center items-center border border-gray-300 rounded">
+                      <button
+                        type="submit"
+                        onClick={() => switchNetwork?.(56)}
+                        className="text-white bg-red-700 hover:bg-red-800 m-[50px] font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center"
+                      >
+                        Switch To Binance Smart Chain
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="w-full flex justify-center items-center border border-gray-300 rounded">
+                      <button
+                        onClick={() =>
+                          connect({ connector: new InjectedConnector() })
+                        }
+                        className="text-white bg-red-700 hover:bg-red-800 m-[50px] font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center"
+                      >
+                        Connect wallet
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -379,14 +459,38 @@ const Staking = () => {
                   >
                     Clear Stuck BNB Balance
                   </p>
-                  <div className="w-full flex justify-center items-center border border-gray-300  rounded">
-                    <button
-                      type="button"
-                      className="text-white  bg-red-700 hover:bg-red-800 m-[50px]  font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center "
-                    >
-                      Switch To Binance Smart Chain
-                    </button>
-                  </div>
+                  {address && chain?.id === 56 ? (
+                    <div className="w-full flex justify-center items-center border border-gray-300 rounded">
+                      <button
+                        type="submit"
+                        onClick={() => switchNetwork?.(56)}
+                        className="text-white bg-red-700 hover:bg-red-800 m-[50px] font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center"
+                      >
+                        Claim/Unstake
+                      </button>
+                    </div>
+                  ) : address && chain?.id !== 56 ? (
+                    <div className="w-full flex justify-center items-center border border-gray-300 rounded">
+                      <button
+                        type="submit"
+                        onClick={() => switchNetwork?.(56)}
+                        className="text-white bg-red-700 hover:bg-red-800 m-[50px] font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center"
+                      >
+                        Switch To Binance Smart Chain
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="w-full flex justify-center items-center border border-gray-300 rounded">
+                      <button
+                        onClick={() =>
+                          connect({ connector: new InjectedConnector() })
+                        }
+                        className="text-white bg-red-700 hover:bg-red-800 m-[50px] font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center"
+                      >
+                        Connect wallet
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -398,14 +502,38 @@ const Staking = () => {
                   >
                     Get User Stake Info
                   </p>
-                  <div className="w-full flex justify-center items-center border border-gray-300  rounded">
-                    <button
-                      type="button"
-                      className="text-white  bg-red-700 hover:bg-red-800 m-[50px]  font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center "
-                    >
-                      Switch To Binance Smart Chain
-                    </button>
-                  </div>
+                  {address && chain?.id === 56 ? (
+                    <div className="w-full flex justify-center items-center border border-gray-300 rounded">
+                      <button
+                        type="submit"
+                        onClick={() => switchNetwork?.(56)}
+                        className="text-white bg-red-700 hover:bg-red-800 m-[50px] font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center"
+                      >
+                        Claim/Unstake
+                      </button>
+                    </div>
+                  ) : address && chain?.id !== 56 ? (
+                    <div className="w-full flex justify-center items-center border border-gray-300 rounded">
+                      <button
+                        type="submit"
+                        onClick={() => switchNetwork?.(56)}
+                        className="text-white bg-red-700 hover:bg-red-800 m-[50px] font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center"
+                      >
+                        Switch To Binance Smart Chain
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="w-full flex justify-center items-center border border-gray-300 rounded">
+                      <button
+                        onClick={() =>
+                          connect({ connector: new InjectedConnector() })
+                        }
+                        className="text-white bg-red-700 hover:bg-red-800 m-[50px] font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center"
+                      >
+                        Connect wallet
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -459,7 +587,7 @@ const Staking = () => {
                   Total staked with SeiCloud
                 </p>
                 <p className="text-gray-700 ps-3" style={{ fontSize: "13px" }}>
-                  {String(stakeAmount)} SeiCloud
+                  {String(stakeAmount) || 0} SeiCloud
                 </p>
               </div>
               <div className="flex justify-between pb-3">
@@ -477,7 +605,7 @@ const Staking = () => {
                   APY
                 </p>
                 <p className="text-gray-700" style={{ fontSize: "13px" }}>
-                  {String(apy)}
+                  {String(apy) || 0}
                 </p>
               </div>
               <div className="flex justify-between pb-3">
@@ -485,7 +613,7 @@ const Staking = () => {
                   First Time Reward
                 </p>
                 <p className="text-gray-700" style={{ fontSize: "13px" }}>
-                  {String(firstTimeReward)}
+                  {String(firstTimeReward) || 0}
                 </p>
               </div>
               <div className="flex justify-between pb-3">
@@ -493,7 +621,7 @@ const Staking = () => {
                   Stake Time
                 </p>
                 <p className="text-gray-700" style={{ fontSize: "13px" }}>
-                  {String(stakeTime)}
+                  {String(stakeTime) || 0}
                 </p>
               </div>
               <div className="flex justify-between pb-3">
@@ -501,7 +629,7 @@ const Staking = () => {
                   Claim Time
                 </p>
                 <p className="text-gray-700" style={{ fontSize: "13px" }}>
-                  {String(claimTime)}
+                  {String(claimTime) || 0}
                 </p>
               </div>
               <div className="flex justify-center ">

@@ -1,6 +1,5 @@
 export const ContractAddress = "0x8dCBba3e63A4b948c72c6602D0F90E969C23607e";
-export const AlchemyApiKey =
-  "eth-mainnet.g.alchemy.com/v2/C0dzm5w3p7Pyq_uaw19tl3ICoOjX-2ij";
+
 export const ContractABI = [
   {
     inputs: [
