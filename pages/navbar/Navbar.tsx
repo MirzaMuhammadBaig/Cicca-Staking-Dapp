@@ -41,7 +41,7 @@ const Navbar = () => {
   };
   return (
     <>
-      <nav className="bg-gray-900 flex border-gray-200 justify-between">
+      <nav className="bg-gray-900 flex border-gray-200 justify-between sm:w-full  w-[450px] h-14">
         <div className="flex flex-wrap items-center ps-10 p-2">
           <Image
             className="h-8 w-auto"
@@ -53,7 +53,7 @@ const Navbar = () => {
           />
           <p className="text-white ps-1">SeiCloud</p>
         </div>
-        <div className="items-center pe-10 p-2 hidden md:flex">
+        <div className="items-center p-2 pe-5 hidden md:flex">
           <Wallet />
         </div>
         <button
@@ -62,7 +62,7 @@ const Navbar = () => {
           aria-controls="default-sidebar"
           type="button"
           onClick={toggleOpen}
-          className="inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg sm:hidden  focus:outline-none "
+          className="inline-flex items-center p-2 mt-2 pe-8 text-sm text-gray-500 rounded-lg sm:hidden  focus:outline-none "
         >
           <span className="sr-only">Open sidebar</span>
           <svg

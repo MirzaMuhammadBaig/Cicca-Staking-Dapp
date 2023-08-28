@@ -49,19 +49,19 @@ const Staking = () => {
     setAmount(e.target.value);
   };
 
-
   useEffect(() => {
     setActiceBtn("1");
-    if (typeof window !== 'undefined') {
-      provider = new ethers.providers.Web3Provider(
-        (window as any).ethereum
-      );
-      if (typeof provider.getSigner !== 'undefined') {
+    if (typeof window !== "undefined") {
+      provider = "wedrf";
+      // provider = new ethers.providers.Web3Provider((window as any).ethereum);
+      if (typeof provider.getSigner !== "undefined") {
         signer = provider.getSigner();
       }
-      console.log("signer", signer)
+      console.log("signer", signer);
     } else {
-      console.log("This code should only be executed in a browser environment.");
+      console.log(
+        "This code should only be executed in a browser environment."
+      );
     }
 
     async function readSeiCloudStatistic() {
@@ -71,7 +71,11 @@ const Staking = () => {
             provider = new ethers.providers.Web3Provider(
               (window as any).ethereum
             );
-            const contract = new ethers.Contract(ContractAddress, ContractABI, signer);
+            const contract = new ethers.Contract(
+              ContractAddress,
+              ContractABI,
+              signer
+            );
             const totalStakedAmount = await contract.totalStakedAmount();
             setTotalStakedAmount(totalStakedAmount);
             const APY = await contract.APY();
@@ -102,9 +106,7 @@ const Staking = () => {
 
     try {
       if ((window as any).ethereum) {
-        provider = new ethers.providers.Web3Provider(
-          (window as any).ethereum
-        );
+        provider = new ethers.providers.Web3Provider((window as any).ethereum);
 
         const accounts = await (window as any).ethereum.request({
           method: "eth_requestAccounts",
@@ -114,23 +116,22 @@ const Staking = () => {
         }
 
         const signer = provider.getSigner();
-        const contract = new ethers.Contract(ContractAddress, ContractABI, signer);
+        const contract = new ethers.Contract(
+          ContractAddress,
+          ContractABI,
+          signer
+        );
 
         try {
+          const tx = await contract.connect(signer).stake(stakingAmount);
 
-          const tx = await contract
-            .connect(signer)
-            .stake(
-              stakingAmount
-            );
-
-          console.log('tx', tx)
+          console.log("tx", tx);
           await tx.wait();
 
           setSending(false);
           alert("Staked");
         } catch (error: any) {
-          console.log("error", error.error.data.message)
+          console.log("error", error.error.data.message);
           if (
             error.message &&
             error.error.data.message.includes(
@@ -190,19 +191,22 @@ const Staking = () => {
         <SideBar />
         <div className="sm:flex sm:justify-center sm:w-full">
           {/* First Column */}
-          <div className="flex">
-            <div className="flex flex-col w-full ml-4">
-              <div className="flex justify-center p-5 ps-10 pe-1">
+          <div className="flex order-2 sm:order-1">
+            <div className="flex flex-col w-[500px]">
+              <div className="flex justify-center align-middle p-5 w-full">
                 <form onSubmit={submitForm}>
-                  <div className="p-3 bg-white border border-gray-200 rounded-lg shadow w-full">
-                    <div className="flex justify-between pb-3 w-full">
+                  <div className="p-3 bg-white border border-gray-200 rounded-lg shadow">
+                    <div className="flex justify-between align-middle pb-3">
                       <p
-                        className="text-xs font-medium pe-5"
+                        className="text-xs font-medium  whitespace-nowrap"
                         style={{ fontSize: "14px" }}
                       >
                         Stake SeiCloud
                       </p>
-                      <p className="text-gray-700" style={{ fontSize: "13px" }}>
+                      <p
+                        className="text-gray-700 sm:ps-14 ps-2 whitespace-nowrap"
+                        style={{ fontSize: "13px" }}
+                      >
                         Stake SeiCloud and receive SeiCloud while staking
                       </p>
                     </div>
@@ -252,10 +256,11 @@ const Staking = () => {
                         </div>
                         <div className="">
                           <span
-                            className={`text-black  font-thin hover:cursor-pointer hover:bg-gray-100  font-xs rounded-full text-sm ps-1 pe-1 p-[2px] me-[4px] ${isLinkBtn("1")
-                              ? "bg-white text-red-700 border border-red-700"
-                              : "bg-gray-100 text-black border border-gray-300"
-                              }`}
+                            className={`text-black  font-thin hover:cursor-pointer hover:bg-gray-100  font-xs rounded-full text-sm ps-1 pe-1 p-[2px] me-[4px] ${
+                              isLinkBtn("1")
+                                ? "bg-white text-red-700 border border-red-700"
+                                : "bg-gray-100 text-black border border-gray-300"
+                            }`}
                             style={{ fontSize: "10px" }}
                             onClick={() => {
                               handleOnclick("1");
@@ -264,10 +269,11 @@ const Staking = () => {
                             1 Month (100%)
                           </span>
                           <span
-                            className={`text-black font-thin hover:cursor-pointer hover:bg-gray-100  font-xs rounded-full text-sm  ps-1 pe-1 p-[2px] me-[4px] ${isLinkBtn("2")
-                              ? "bg-white text-red-700 border border-red-700"
-                              : "bg-gray-100 text-black border border-gray-300"
-                              }`}
+                            className={`text-black font-thin hover:cursor-pointer hover:bg-gray-100  font-xs rounded-full text-sm  ps-1 pe-1 p-[2px] me-[4px] ${
+                              isLinkBtn("2")
+                                ? "bg-white text-red-700 border border-red-700"
+                                : "bg-gray-100 text-black border border-gray-300"
+                            }`}
                             style={{ fontSize: "10px" }}
                             onClick={() => {
                               handleOnclick("2");
@@ -276,10 +282,11 @@ const Staking = () => {
                             3 Months (400%)
                           </span>
                           <span
-                            className={`text-black bg-gray-100  font-thin hover:cursor-pointer hover:bg-gray-100  font-xs rounded-full text-sm  ps-1 pe-1 p-[2px]  ${isLinkBtn("3")
-                              ? "bg-white text-red-700 border border-red-700"
-                              : "bg-gray-100 text-black border border-gray-300"
-                              }`}
+                            className={`text-black bg-gray-100  font-thin hover:cursor-pointer hover:bg-gray-100  font-xs rounded-full text-sm  ps-1 pe-1 p-[2px]  ${
+                              isLinkBtn("3")
+                                ? "bg-white text-red-700 border border-red-700"
+                                : "bg-gray-100 text-black border border-gray-300"
+                            }`}
                             style={{ fontSize: "10px" }}
                             onClick={() => {
                               handleOnclick("3");
@@ -290,7 +297,6 @@ const Staking = () => {
                         </div>
                       </div>
                     </div>
-
 
                     <div
                       className="flex   justify-between mt-3 rounded-lg"
@@ -365,7 +371,7 @@ const Staking = () => {
                 </form>
               </div>
               {/* UnStake */}
-              <div className="flex justify-center p-5 pt-0 ps-10 pe-1">
+              <div className="flex justify-center p-5 pt-0 ">
                 <div className="p-5 pt-3 bg-white border border-gray-200 rounded-lg shadow w-full">
                   <p
                     className="text-xs font-medium pb-2"
@@ -403,7 +409,7 @@ const Staking = () => {
               </div>
 
               {/* Claim Monthly Reward */}
-              <div className="flex justify-center p-5 pt-0 ps-10 pe-1">
+              <div className="flex justify-center p-5 pt-0">
                 <div className="p-5 pt-3 bg-white border border-gray-200 rounded-lg shadow w-full">
                   <p
                     className="text-xs font-medium pb-2"
@@ -441,7 +447,7 @@ const Staking = () => {
               </div>
 
               {/* withdraw All */}
-              <div className="flex justify-center p-5 pt-0 ps-10 pe-1">
+              <div className="flex justify-center p-5 pt-0">
                 <div className="p-5 pt-3 bg-white border border-gray-200 rounded-lg shadow w-full">
                   <p
                     className="text-xs font-medium pb-2"
@@ -478,7 +484,7 @@ const Staking = () => {
                 </div>
               </div>
 
-              <div className="flex justify-center p-5 pt-0 ps-10 pe-1">
+              <div className="flex justify-center p-5 pt-0">
                 <div className="p-5 pt-3 bg-white border border-gray-200 rounded-lg shadow w-full">
                   <p
                     className="text-xs font-medium pb-2"
@@ -515,7 +521,7 @@ const Staking = () => {
                 </div>
               </div>
 
-              <div className="flex justify-center p-5 pt-0 ps-10 pe-1">
+              <div className="flex justify-center p-5 pt-0">
                 <div className="p-5 pt-3 bg-white border border-gray-200 rounded-lg shadow w-full">
                   <p
                     className="text-xs font-medium pb-2"
@@ -552,7 +558,7 @@ const Staking = () => {
                 </div>
               </div>
 
-              <div className="flex justify-center p-5 pt-0 ps-10 pe-1">
+              <div className="flex justify-center p-5 pt-0">
                 <div className="p-5 pt-3 bg-white border border-gray-200 rounded-lg shadow w-full">
                   <p
                     className="text-xs font-medium pb-2"
@@ -589,32 +595,41 @@ const Staking = () => {
                 </div>
               </div>
 
-              <div className="flex justify-center p-5 pt-0 ps-10 pe-1" >
-            <div className="p-5 pt-3 bg-white border border-gray-200 rounded-lg shadow w-full">
-              <p className='text-xs font-medium pb-2' style={{ fontSize: "14px" }}>FAQs</p>
-              {faqs.map((faq, index) => (
-                <div
-                  key={index}
-                  className="mb-2 border bg-white border-gray-200 rounded-lg cursor-pointer"
-                  onClick={() => toggleFAQ(index)}
-                >
-                  <div className="flex p-2 ps-4 pe-4 bg-white hover:bg-gray-50 justify-between items-center">
-                    <h3 className="text-sm font-small">{faq.question}</h3>
-                    <span className="text-gray-500">
-                      {activeIndex === index ? '-' : '+'}
-                    </span>
-                  </div>
-                  {activeIndex === index && <p className="mt-2 pb-2 ps-4 pe-4 bg-white text-sm text-gray-500 cursor-text">{faq.answer}</p>}
+              <div className="flex justify-center p-5 pt-0">
+                <div className="p-5 pt-3 bg-white border border-gray-200 rounded-lg shadow w-full">
+                  <p
+                    className="text-xs font-medium pb-2"
+                    style={{ fontSize: "14px" }}
+                  >
+                    FAQs
+                  </p>
+                  {faqs.map((faq, index) => (
+                    <div
+                      key={index}
+                      className="mb-2 border bg-white border-gray-200 rounded-lg cursor-pointer"
+                      onClick={() => toggleFAQ(index)}
+                    >
+                      <div className="flex p-2 ps-4 pe-4 bg-white hover:bg-gray-50 justify-between items-center">
+                        <h3 className="text-sm font-small">{faq.question}</h3>
+                        <span className="text-gray-500">
+                          {activeIndex === index ? "-" : "+"}
+                        </span>
+                      </div>
+                      {activeIndex === index && (
+                        <p className="mt-2 pb-2 ps-4 pe-4 bg-white text-sm text-gray-500 cursor-text">
+                          {faq.answer}
+                        </p>
+                      )}
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
+              </div>
             </div>
           </div>
 
           {/* Second Column */}
-          <div className="flex sm:-ml-4 ">
-            <div className=" p-5 bg-white border border-gray-200 rounded-lg shadow ml-5 mr-5 mb-5 sm:mt-5 h-max w-full">
+          <div className="flex order-1 sm:order-2  w-[425px]">
+            <div className=" p-5 bg-white border border-gray-200 rounded-lg shadow ml-5 mb-5 sm:mt-5 h-max w-full">
               <div className="flex justify-between pb-3">
                 <p className="text-xs font-medium" style={{ fontSize: "14px" }}>
                   SeiCloud Statistic
