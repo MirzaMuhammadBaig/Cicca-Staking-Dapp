@@ -47,12 +47,12 @@ export default function UserStakeInfos() {
   return (
     <>
       <form onSubmit={handleFormSubmit}>
-        <div className="flex flex-col justify-center m-6">
+        <div className="flex flex-col justify-center items-center m-6">
           <div>
             <input
               type="text"
               name="info"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-60 p-2.5 mb-5"
+              className="bg-gray-50 border focus:outline-none  border-gray-300 text-gray-900 text-sm rounded-lg block w-60 p-2.5 mb-5"
               placeholder="address"
               required
             />

@@ -17,12 +17,21 @@ function UnStake() {
         const signer = provider.getSigner();
         const contract = new ethers.Contract(data, ContractABI, signer);
 
-        // Replace "unstake" with the actual method name in your contract ABI
         await contract.unstake();
 
         console.log("Unstake successful");
-      } catch (err: any) {
-        console.log("Error while unstaking:", err.message);
+      } catch (error: any) {
+        if (
+          error.message &&
+          error.error.data.message.includes(
+            "Cicca_Staking: You didn't staked"
+          )
+        ) {
+          alert("You didn't staked");
+        } else {
+          alert(error)
+        }
+        console.log(error)
       } finally {
         setLoading(false);
       }
@@ -34,9 +43,8 @@ function UnStake() {
   return (
     <button
       type="submit"
-      className={`text-white bg-red-700 hover:bg-red-800 m-[50px] font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center ${
-        loading ? "opacity-50 cursor-not-allowed" : ""
-      }`}
+      className={`text-white bg-red-700 hover:bg-red-800 m-[50px] font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center ${loading ? "opacity-50 cursor-not-allowed" : ""
+        }`}
       onClick={unstakeFunc}
       disabled={loading}
     >

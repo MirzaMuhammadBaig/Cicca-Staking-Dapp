@@ -20,8 +20,18 @@ function ClaimMonthlyReward() {
         await contract.claimMonthlyReward();
 
         console.log("claimMonthlyReward successful");
-      } catch (err: any) {
-        console.log("Error while claimMonthlyReward:", err.message);
+      } catch (error: any) {
+        if (
+          error.message &&
+          error.error.data.message.includes(
+            "Cicca_Staking: You don't have any reward to claim"
+          )
+        ) {
+          alert("You don't have any reward to claim");
+        } else {
+          alert(error)
+        }
+        console.log(error)
       } finally {
         setLoading(false);
       }
@@ -33,9 +43,8 @@ function ClaimMonthlyReward() {
   return (
     <button
       type="submit"
-      className={`text-white bg-red-700 hover:bg-red-800 m-[50px] font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center ${
-        loading ? "opacity-50 cursor-not-allowed" : ""
-      }`}
+      className={`text-white bg-red-700 hover:bg-red-800 m-[50px] font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center ${loading ? "opacity-50 cursor-not-allowed" : ""
+        }`}
       onClick={claimMonthlyReward}
       disabled={loading}
     >

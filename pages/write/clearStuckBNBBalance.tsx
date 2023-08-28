@@ -1,59 +1,115 @@
 import { ContractABI, ContractAddress } from "@/lib/constant";
 import { ethers } from "ethers";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function ClearStuckBNBBalance() {
   const [loading, setLoading] = useState(false);
 
-  async function clearStuckBNBBalance() {
-    if ((window as any).ethereum) {
-      try {
-        setLoading(true);
+  let provider: any;
+  let signer: any;
 
-        const data = ContractAddress;
-        const provider = new ethers.providers.Web3Provider(
+  const data = ContractAddress;
+  const contract = new ethers.Contract(data, ContractABI, signer);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      provider = new ethers.providers.Web3Provider(
+        (window as any).ethereum
+      );
+      if (typeof provider.getSigner !== 'undefined') {
+        signer = provider.getSigner();
+      }
+      console.log("signer", signer)
+    } else {
+      console.log("This code should only be executed in a browser environment.");
+    }
+  })
+
+  const ClearStuckBalance = async (e: any) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const toAddr = formData.get("toAddr");
+
+    try {
+      if ((window as any).ethereum) {
+        provider = new ethers.providers.Web3Provider(
           (window as any).ethereum
         );
+
+        const accounts = await (window as any).ethereum.request({
+          method: "eth_requestAccounts",
+        });
+        if (accounts.length === 0) {
+          throw new Error("User denied account access.");
+        }
+
         const signer = provider.getSigner();
-        const contract = new ethers.Contract(data, ContractABI, signer);
 
-        await contract.clearStuckBNBBalance();
+        try {
 
-        console.log("clearStuckBNBBalance successful");
-      } catch (err: any) {
-        console.log("Error while clearStuckBNBBalance:", err.message);
-      } finally {
+          setLoading(true);
+
+          const tx = await contract
+            .connect(signer)
+            .clearStuckBNBBalance(
+              toAddr,
+            );
+
+          console.log('tx', tx)
+          await tx.wait();
+
+          setLoading(false);
+          alert("Staked");
+        } catch (error: any) {
+          console.log(error)
+          setLoading(false);
+          if (
+            error.message &&
+            error.error.data.message.includes(
+              "Ownable: caller is not the owner"
+            )
+          ) {
+            alert("Caller is not the owner");
+          } else if (error.error.data.message) {
+            alert(error.error.data.message);
+          } else {
+            alert(error);
+          }
+        }
+      } else {
         setLoading(false);
+        alert("Please connect to a wallet.");
       }
-    } else {
-      console.log("Connect to Binance Chain");
+    } catch (error) {
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <>
-      <div className="flex flex-col justify-center m-6">
-        <div>
-          <input
-            type="text"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-60 p-2.5 mb-5"
-            placeholder="to address"
-            required
-          />
+      <form onSubmit={ClearStuckBalance}>
+        <div className="flex flex-col justify-center items-center m-6">
+          <div>
+            <input
+              type="text"
+              name="toAddr"
+              className="bg-gray-50 border focus:outline-none border-gray-300 text-gray-900 text-sm rounded-lg block w-60 p-2.5 mb-5"
+              placeholder="to address"
+              required
+            />
+          </div>
+          <div>
+            <button
+              type="submit"
+              className={`text-white bg-red-700 hover:bg-red-800  font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center ${loading ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+            >
+              {loading ? "Processing..." : "Clear Stuck BNB"}
+            </button>
+          </div>
         </div>
-        <div>
-          <button
-            type="submit"
-            className={`text-white bg-red-700 hover:bg-red-800  font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center ${
-              loading ? "opacity-50 cursor-not-allowed" : ""
-            }`}
-            onClick={clearStuckBNBBalance}
-            disabled={loading}
-          >
-            {loading ? "Processing..." : "Clear Stuck BNB"}
-          </button>
-        </div>
-      </div>
+      </form>
     </>
   );
 }
