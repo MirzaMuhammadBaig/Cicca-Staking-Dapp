@@ -1,4 +1,4 @@
-import { ContractABI, ContractAddress } from "@/lib/constant";
+import { ContractABI, ContractAddress } from "../../lib/constant.ts";
 import { ethers } from "ethers";
 import React, { useEffect, useState } from "react";
 

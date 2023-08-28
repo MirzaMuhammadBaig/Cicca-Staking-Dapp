@@ -1,16 +1,17 @@
-import { ContractABI, ContractAddress } from "@/lib/constant";
+import { ContractABI, ContractAddress } from "../../lib/constant.ts";
 import { ethers } from "ethers";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function UserStakeInfos() {
   const [infoDetails, setInfoDetails] = useState<any>('');
   const [loading, setLoading] = useState(false);
+  const [provider, setProvider] = useState<any>(null);
 
-  let provider: any;
-
-  if ((window as any).ethereum) {
-    provider = new ethers.providers.Web3Provider((window as any).ethereum);
-  }
+  useEffect(() => {
+    if (typeof window !== 'undefined' && (window as any).ethereum) {
+      setProvider(new ethers.providers.Web3Provider((window as any).ethereum));
+    }
+  }, []);
 
   const contract = new ethers.Contract(
     ContractAddress,

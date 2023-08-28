@@ -8,7 +8,7 @@ import { BsArrowUpRight } from "react-icons/bs";
 import { useAccount, useConnect, useNetwork, useSwitchNetwork } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import img from "../assets/stakePagePic.webp";
-import { ContractABI, ContractAddress } from "@/lib/constant.ts";
+import { ContractABI, ContractAddress } from "../lib/constant.ts";
 import UnStake from "./write/unstake.tsx";
 import ClaimMonthlyReward from "./write/claimMonthlyRewars.tsx";
 import WithdrawAll from "./write/withdrawAll.tsx";
@@ -186,18 +186,18 @@ const Staking = () => {
   return (
     <>
       <Navbar />
-      <div className="sm:flex ">
+      <div className="sm:flex">
         <SideBar />
-        <div className="sm:flex justify-center w-full">
+        <div className="sm:flex sm:justify-center sm:w-full">
           {/* First Column */}
           <div className="flex">
-            <div className="flex flex-col w-full -ml-4">
+            <div className="flex flex-col w-full ml-4">
               <div className="flex justify-center p-5 ps-10 pe-1">
                 <form onSubmit={submitForm}>
                   <div className="p-3 bg-white border border-gray-200 rounded-lg shadow w-full">
                     <div className="flex justify-between pb-3 w-full">
                       <p
-                        className="text-xs font-medium"
+                        className="text-xs font-medium pe-5"
                         style={{ fontSize: "14px" }}
                       >
                         Stake SeiCloud
@@ -256,7 +256,7 @@ const Staking = () => {
                               ? "bg-white text-red-700 border border-red-700"
                               : "bg-gray-100 text-black border border-gray-300"
                               }`}
-                            style={{ fontSize: "12px" }}
+                            style={{ fontSize: "10px" }}
                             onClick={() => {
                               handleOnclick("1");
                             }}
@@ -268,7 +268,7 @@ const Staking = () => {
                               ? "bg-white text-red-700 border border-red-700"
                               : "bg-gray-100 text-black border border-gray-300"
                               }`}
-                            style={{ fontSize: "12px" }}
+                            style={{ fontSize: "10px" }}
                             onClick={() => {
                               handleOnclick("2");
                             }}
@@ -280,7 +280,7 @@ const Staking = () => {
                               ? "bg-white text-red-700 border border-red-700"
                               : "bg-gray-100 text-black border border-gray-300"
                               }`}
-                            style={{ fontSize: "12px" }}
+                            style={{ fontSize: "10px" }}
                             onClick={() => {
                               handleOnclick("3");
                             }}
@@ -589,35 +589,26 @@ const Staking = () => {
                 </div>
               </div>
 
-              <div className="flex justify-center p-5 pt-0 ps-10 pe-1">
-                <div className="p-5 pt-3 bg-white border border-gray-200 rounded-lg shadow w-full">
-                  <p
-                    className="text-xs font-medium pb-2"
-                    style={{ fontSize: "14px" }}
-                  >
-                    FAQs
-                  </p>
-                  {faqs.map((faq, index) => (
-                    <div
-                      key={index}
-                      className="mb-2 border bg-white border-gray-200 rounded-lg cursor-pointer"
-                      onClick={() => toggleFAQ(index)}
-                    >
-                      <div className="flex p-2 ps-4 pe-4 bg-white hover:bg-gray-50 justify-between items-center">
-                        <h3 className="text-sm font-small">{faq.question}</h3>
-                        <span className="text-gray-500">
-                          {activeIndex === index ? "-" : "+"}
-                        </span>
-                      </div>
-                      {activeIndex === index && (
-                        <p className="mt-2 pb-2 ps-4 pe-4 bg-white text-sm text-gray-500 cursor-text">
-                          {faq.answer}
-                        </p>
-                      )}
-                    </div>
-                  ))}
+              <div className="flex justify-center p-5 pt-0 ps-10 pe-1" >
+            <div className="p-5 pt-3 bg-white border border-gray-200 rounded-lg shadow w-full">
+              <p className='text-xs font-medium pb-2' style={{ fontSize: "14px" }}>FAQs</p>
+              {faqs.map((faq, index) => (
+                <div
+                  key={index}
+                  className="mb-2 border bg-white border-gray-200 rounded-lg cursor-pointer"
+                  onClick={() => toggleFAQ(index)}
+                >
+                  <div className="flex p-2 ps-4 pe-4 bg-white hover:bg-gray-50 justify-between items-center">
+                    <h3 className="text-sm font-small">{faq.question}</h3>
+                    <span className="text-gray-500">
+                      {activeIndex === index ? '-' : '+'}
+                    </span>
+                  </div>
+                  {activeIndex === index && <p className="mt-2 pb-2 ps-4 pe-4 bg-white text-sm text-gray-500 cursor-text">{faq.answer}</p>}
                 </div>
-              </div>
+              ))}
+            </div>
+          </div>
             </div>
           </div>
 
