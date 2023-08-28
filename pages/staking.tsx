@@ -628,7 +628,7 @@ const Staking = () => {
           </div>
 
           {/* Second Column */}
-          <div className="flex order-1 sm:order-2  w-[425px]">
+          <div className="flex order-1 sm:order-2  w-[432px]">
             <div className=" p-5 bg-white border border-gray-200 rounded-lg shadow ml-5 mb-5 sm:mt-5 h-max w-full">
               <div className="flex justify-between pb-3">
                 <p className="text-xs font-medium" style={{ fontSize: "14px" }}>
@@ -641,44 +641,74 @@ const Staking = () => {
                 </p>
               </div>
               <div className="flex justify-between pb-3">
-                <p className="text-gray-700 pe-3" style={{ fontSize: "13px" }}>
+                <p
+                  className="text-gray-700 pe-3 whitespace-nowrap"
+                  style={{ fontSize: "13px" }}
+                >
                   Total staked with SeiCloud
                 </p>
-                <p className="text-gray-700 ps-3" style={{ fontSize: "13px" }}>
+                <p
+                  className="text-gray-700 ps-3  whitespace-nowrap"
+                  style={{ fontSize: "13px" }}
+                >
                   {String(stakeAmount) || 0} SeiCloud
                 </p>
               </div>
               <div className="flex justify-between pb-3">
-                <p className="text-gray-700" style={{ fontSize: "13px" }}>
+                <p
+                  className="text-gray-700  whitespace-nowrap"
+                  style={{ fontSize: "13px" }}
+                >
                   {" "}
                   SeiCloud market cap
                 </p>
-                <p className="text-gray-700" style={{ fontSize: "13px" }}>
+                <p
+                  className="text-gray-700  whitespace-nowrap"
+                  style={{ fontSize: "13px" }}
+                >
                   {" "}
                   $0
                 </p>
               </div>
               <div className="flex justify-between pb-3">
-                <p className="text-gray-700" style={{ fontSize: "13px" }}>
+                <p
+                  className="text-gray-700  whitespace-nowrap"
+                  style={{ fontSize: "13px" }}
+                >
                   APY
                 </p>
-                <p className="text-gray-700" style={{ fontSize: "13px" }}>
+                <p
+                  className="text-gray-700  whitespace-nowrap"
+                  style={{ fontSize: "13px" }}
+                >
                   {String(apy) || 0}
                 </p>
               </div>
               <div className="flex justify-between pb-3">
-                <p className="text-gray-700" style={{ fontSize: "13px" }}>
+                <p
+                  className="text-gray-700  whitespace-nowrap"
+                  style={{ fontSize: "13px" }}
+                >
                   First Time Reward
                 </p>
-                <p className="text-gray-700" style={{ fontSize: "13px" }}>
+                <p
+                  className="text-gray-700  whitespace-nowrap"
+                  style={{ fontSize: "13px" }}
+                >
                   {String(firstTimeReward) || 0}
                 </p>
               </div>
               <div className="flex justify-between pb-3">
-                <p className="text-gray-700" style={{ fontSize: "13px" }}>
+                <p
+                  className="text-gray-700  whitespace-nowrap"
+                  style={{ fontSize: "13px" }}
+                >
                   Stake Time
                 </p>
-                <p className="text-gray-700" style={{ fontSize: "13px" }}>
+                <p
+                  className="text-gray-700  whitespace-nowrap"
+                  style={{ fontSize: "13px" }}
+                >
                   {String(stakeTime) || 0}
                 </p>
               </div>

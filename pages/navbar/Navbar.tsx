@@ -53,7 +53,7 @@ const Navbar = () => {
           />
           <p className="text-white ps-1">SeiCloud</p>
         </div>
-        <div className="items-center p-2 pe-5 hidden md:flex">
+        <div className="items-center p-2 pe-5 hidden lg:flex">
           <Wallet />
         </div>
         <button
@@ -62,7 +62,7 @@ const Navbar = () => {
           aria-controls="default-sidebar"
           type="button"
           onClick={toggleOpen}
-          className="inline-flex items-center p-2 mt-2 pe-8 text-sm text-gray-500 rounded-lg sm:hidden  focus:outline-none "
+          className="lg:hidden md:inline-flex items-center p-2 mt-2 pe-8 text-sm text-gray-500 rounded-lg focus:outline-none"
         >
           <span className="sr-only">Open sidebar</span>
           <svg
@@ -81,14 +81,14 @@ const Navbar = () => {
         </button>
       </nav>
       {/* SideBar Mobile */}
-      <div className="sm:hidden">
+      <div className="lg:hidden">
         <aside
           id="default-sidebar"
           onClick={toggleOpen}
           className={`${
             open
-              ? "top-0 bg-white left-0 absolute md:relative h-full z-40 w-64 transition-transform translate-x-0 text-black"
-              : "top-0 bg-white left-0 absolute md:relative h-full z-40 w-64 transition-transform -translate-x-full sm:translate-x-0 text-black"
+              ? "top-0 bg-white left-0 absolute lg:relative h-full z-40 w-64 transition-transform translate-x-0 text-black"
+              : "top-0 bg-white left-0 absolute lg:relative h-full z-40 w-64 transition-transform -translate-x-full  text-black"
           }`}
           aria-label="Sidebar"
         >
@@ -111,7 +111,6 @@ const Navbar = () => {
                   <div className="flex-1 ml-3 whitespace-nowrap">Staking</div>
                 </Link>
               </li>
-
               <li>
                 <Link
                   className={`p-2 flex items-center rounded-lg group m-2 ${
@@ -129,7 +128,6 @@ const Navbar = () => {
                   <div className="flex-1 ml-3 whitespace-nowrap">Bridge</div>
                 </Link>
               </li>
-
               <li>
                 <Link
                   className={`p-2 flex items-center rounded-lg group m-2 ${
