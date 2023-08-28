@@ -40,7 +40,6 @@ const Staking = () => {
 
   let provider: any;
   let signer: any;
-  let contract: any;
 
   const handleOnclick = (btn: string) => {
     setActiceBtn(btn);
@@ -53,7 +52,6 @@ const Staking = () => {
 
   useEffect(() => {
     setActiceBtn("1");
-    contract = new ethers.Contract(ContractAddress, ContractABI, signer);
     if (typeof window !== 'undefined') {
       provider = new ethers.providers.Web3Provider(
         (window as any).ethereum
@@ -73,7 +71,7 @@ const Staking = () => {
             provider = new ethers.providers.Web3Provider(
               (window as any).ethereum
             );
-
+            const contract = new ethers.Contract(ContractAddress, ContractABI, signer);
             const totalStakedAmount = await contract.totalStakedAmount();
             setTotalStakedAmount(totalStakedAmount);
             const APY = await contract.APY();
@@ -116,6 +114,7 @@ const Staking = () => {
         }
 
         const signer = provider.getSigner();
+        const contract = new ethers.Contract(ContractAddress, ContractABI, signer);
 
         try {
 
