@@ -3,7 +3,7 @@ import { ethers } from "ethers";
 import React, { useState } from "react";
 
 export default function UserStakeInfos() {
-  const [infoDetails, setInfoDetails] = useState<string | number>('');
+  const [infoDetails, setInfoDetails] = useState<any>('');
   const [loading, setLoading] = useState(false);
 
   let provider: any;
