@@ -189,13 +189,13 @@ const Staking = () => {
       <Navbar />
       <div className="sm:flex">
         <SideBar />
-        <div className="sm:flex sm:justify-center sm:w-full">
+        <div className="lg:flex lg:justify-center lg:w-full block ">
           {/* First Column */}
-          <div className="flex order-2 sm:order-1">
-            <div className="flex flex-col w-[500px]">
+          <div className="flex order-2 lg:order-1">
+            <div className="flex flex-col lg:w-[500px] md:w-[768px]">
               <div className="flex justify-center align-middle p-5 w-full">
                 <form onSubmit={submitForm}>
-                  <div className="p-3 bg-white border border-gray-200 rounded-lg shadow">
+                  <div className="p-3 bg-white border border-gray-200 rounded-lg shadow  lg:w-[460px] md:w-[725px] w-[410px]">
                     <div className="flex justify-between align-middle pb-3">
                       <p
                         className="text-xs font-medium  whitespace-nowrap"
@@ -628,7 +628,7 @@ const Staking = () => {
           </div>
 
           {/* Second Column */}
-          <div className="flex order-1 sm:order-2  w-[432px]">
+          <div className="flex order-1 lg:order-2  lg:w-[432px] md:w-[748px] w-[432px]">
             <div className=" p-5 bg-white border border-gray-200 rounded-lg shadow ml-5 mb-5 sm:mt-5 h-max w-full">
               <div className="flex justify-between pb-3">
                 <p className="text-xs font-medium" style={{ fontSize: "14px" }}>
