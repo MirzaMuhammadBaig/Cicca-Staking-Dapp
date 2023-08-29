@@ -253,14 +253,16 @@ const Staking = () => {
                           className="text-gray-700 mt-[2px]"
                           style={{ fontSize: "13px" }}
                         >
-                          Cicca-Defi APY <span className="font-bold"> (3500) </span>
+                          Cicca-Defi APY{" "}
+                          <span className="font-bold"> (3500) </span>
                         </div>
                         <div className="">
                           <span
-                            className={`text-black  font-thin hover:cursor-pointer hover:bg-gray-100  font-xs rounded-full text-sm ps-1 pe-1 p-[2px] me-[4px] ${isLinkBtn("1")
+                            className={`text-black  font-thin hover:cursor-pointer hover:bg-gray-100  font-xs rounded-full text-sm ps-1 pe-1 p-[2px] me-[4px] ${
+                              isLinkBtn("1")
                                 ? "bg-white text-red-700 border border-red-700"
                                 : "bg-gray-100 text-black border border-gray-300"
-                              }`}
+                            }`}
                             style={{ fontSize: "10px" }}
                             onClick={() => {
                               handleOnclick("1");
@@ -269,10 +271,11 @@ const Staking = () => {
                             1 Month (100%)
                           </span>
                           <span
-                            className={`text-black font-thin hover:cursor-pointer hover:bg-gray-100  font-xs rounded-full text-sm  ps-1 pe-1 p-[2px] me-[4px] ${isLinkBtn("2")
+                            className={`text-black font-thin hover:cursor-pointer hover:bg-gray-100  font-xs rounded-full text-sm  ps-1 pe-1 p-[2px] me-[4px] ${
+                              isLinkBtn("2")
                                 ? "bg-white text-red-700 border border-red-700"
                                 : "bg-gray-100 text-black border border-gray-300"
-                              }`}
+                            }`}
                             style={{ fontSize: "10px" }}
                             onClick={() => {
                               handleOnclick("2");
@@ -281,10 +284,11 @@ const Staking = () => {
                             3 Months (400%)
                           </span>
                           <span
-                            className={`text-black bg-gray-100  font-thin hover:cursor-pointer hover:bg-gray-100  font-xs rounded-full text-sm  ps-1 pe-1 p-[2px]  ${isLinkBtn("3")
+                            className={`text-black bg-gray-100  font-thin hover:cursor-pointer hover:bg-gray-100  font-xs rounded-full text-sm  ps-1 pe-1 p-[2px]  ${
+                              isLinkBtn("3")
                                 ? "bg-white text-red-700 border border-red-700"
                                 : "bg-gray-100 text-black border border-gray-300"
-                              }`}
+                            }`}
                             style={{ fontSize: "10px" }}
                             onClick={() => {
                               handleOnclick("3");
@@ -355,6 +359,7 @@ const Staking = () => {
                       ) : (
                         <>
                           <button
+                            suppressHydrationWarning
                             onClick={() =>
                               connect({ connector: new InjectedConnector() })
                             }
