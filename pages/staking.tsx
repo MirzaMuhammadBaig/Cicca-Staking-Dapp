@@ -173,35 +173,6 @@ const Staking = () => {
 
   const approveFunc = async () => {
     write();
-
-    // =-===============
-    // if ((window as any).bnb) {
-    // if (chain?.id === 56) {
-    //   try {
-    //     provider = new ethers.providers.JsonRpcProvider(
-    //       "https://bsc.publicnode.com"
-    //     );
-    //     signer = provider.getSigner(
-    //       "0x35BE110a0eaA469553718d1f4eb06e8808b614bF"
-    //     );
-
-    //     console.log("sdfgjk END-1");
-    //     const contract = new ethers.Contract(TokenAddress, TokenABI, signer);
-    //     console.log(
-    //       "🚀 ~ file: staking.tsx:171 ~ approveFunc ~ contract:",
-    //       contract
-    //     );
-    //     console.log("sdfgjk END-2");
-
-    //     await contract.approve(ContractAddress, "5");
-    //     console.log("sdfgjk END");
-    //   } catch (err: any) {
-    //     console.log("Error", err);
-    //   }
-    //   // } else {
-    //   //   console.log("Connect to Binance Chain");
-    //   // }
-    // }
   };
 
   const isLinkBtn = (btn: string | undefined) => {
