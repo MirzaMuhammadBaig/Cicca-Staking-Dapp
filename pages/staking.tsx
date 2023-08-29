@@ -57,7 +57,6 @@ const Staking = () => {
       if (typeof provider.getSigner !== "undefined") {
         signer = provider.getSigner();
       }
-      console.log("signer", signer);
     } else {
       console.log(
         "This code should only be executed in a browser environment."
@@ -197,7 +196,7 @@ const Staking = () => {
               <div className="flex justify-center align-middle p-5 w-full">
                 <form onSubmit={submitForm}>
                   <div className="p-3 bg-white border border-gray-200 rounded-lg shadow  lg:w-[460px] md:w-[725px] w-[410px]">
-                    <div className="flex justify-between align-middle pb-3">
+                    <div className="flex flex-col sm:flex-row justify-between align-middle pb-3">
                       <p
                         className="text-xs font-medium  whitespace-nowrap"
                         style={{ fontSize: "14px" }}
@@ -205,7 +204,7 @@ const Staking = () => {
                         Stake Cicca-Defi
                       </p>
                       <p
-                        className="text-gray-700 sm:ps-14 ps-2 whitespace-nowrap"
+                        className="flex justify-between text-gray-700  whitespace-nowrap"
                         style={{ fontSize: "13px" }}
                       >
                         Stake Cicca-Defi and receive Cicca-Defi while staking
@@ -634,7 +633,7 @@ const Staking = () => {
             <div className=" p-5 bg-white border border-gray-200 rounded-lg shadow lg:-ml-3 ml-5 mb-5 sm:mt-5 h-max w-full">
               <div className="flex justify-between pb-3">
                 <p className="text-xs font-medium" style={{ fontSize: "14px" }}>
-                Cicca-Defi Statistic
+                  Cicca-Defi Statistic
                 </p>
                 <p className="text-gray-700" style={{ fontSize: "13px" }}>
                   <a href="https://seicloud.io/staking" target="blank">
