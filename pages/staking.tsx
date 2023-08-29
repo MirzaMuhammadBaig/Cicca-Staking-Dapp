@@ -197,7 +197,7 @@ const Staking = () => {
               <div className="flex justify-center align-middle p-5 w-full">
                 <form onSubmit={submitForm}>
                   <div className="p-3 bg-white border border-gray-200 rounded-lg shadow  lg:w-[460px] md:w-[725px] w-[410px]">
-                    <div className="flex justify-between align-middle pb-3">
+                    <div className="flex flex-col sm:flex-row justify-between pb-3">
                       <p
                         className="text-xs font-medium  whitespace-nowrap"
                         style={{ fontSize: "14px" }}
@@ -205,7 +205,7 @@ const Staking = () => {
                         Stake Cicca-Defi
                       </p>
                       <p
-                        className="text-gray-700 sm:ps-14 ps-2 whitespace-nowrap"
+                        className="text-gray-700   whitespace-nowrap"
                         style={{ fontSize: "13px" }}
                       >
                         Stake Cicca-Defi and receive Cicca-Defi while staking
