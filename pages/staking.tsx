@@ -57,6 +57,7 @@ const Staking = () => {
       if (typeof provider.getSigner !== "undefined") {
         signer = provider.getSigner();
       }
+      console.log("signer", signer);
     } else {
       console.log(
         "This code should only be executed in a browser environment."
@@ -196,7 +197,7 @@ const Staking = () => {
               <div className="flex justify-center align-middle p-5 w-full">
                 <form onSubmit={submitForm}>
                   <div className="p-3 bg-white border border-gray-200 rounded-lg shadow  lg:w-[460px] md:w-[725px] w-[410px]">
-                    <div className="flex flex-col sm:flex-row justify-between align-middle pb-3">
+                    <div className="flex justify-between align-middle pb-3">
                       <p
                         className="text-xs font-medium  whitespace-nowrap"
                         style={{ fontSize: "14px" }}
@@ -204,7 +205,7 @@ const Staking = () => {
                         Stake Cicca-Defi
                       </p>
                       <p
-                        className="flex justify-between text-gray-700  whitespace-nowrap"
+                        className="text-gray-700 sm:ps-14 ps-2 whitespace-nowrap"
                         style={{ fontSize: "13px" }}
                       >
                         Stake Cicca-Defi and receive Cicca-Defi while staking
@@ -252,15 +253,14 @@ const Staking = () => {
                           className="text-gray-700 mt-[2px]"
                           style={{ fontSize: "13px" }}
                         >
-                          Cicca-Defi APY
+                          Cicca-Defi APY <span className="font-bold"> (3500) </span>
                         </div>
                         <div className="">
                           <span
-                            className={`text-black  font-thin hover:cursor-pointer hover:bg-gray-100  font-xs rounded-full text-sm ps-1 pe-1 p-[2px] me-[4px] ${
-                              isLinkBtn("1")
+                            className={`text-black  font-thin hover:cursor-pointer hover:bg-gray-100  font-xs rounded-full text-sm ps-1 pe-1 p-[2px] me-[4px] ${isLinkBtn("1")
                                 ? "bg-white text-red-700 border border-red-700"
                                 : "bg-gray-100 text-black border border-gray-300"
-                            }`}
+                              }`}
                             style={{ fontSize: "10px" }}
                             onClick={() => {
                               handleOnclick("1");
@@ -269,11 +269,10 @@ const Staking = () => {
                             1 Month (100%)
                           </span>
                           <span
-                            className={`text-black font-thin hover:cursor-pointer hover:bg-gray-100  font-xs rounded-full text-sm  ps-1 pe-1 p-[2px] me-[4px] ${
-                              isLinkBtn("2")
+                            className={`text-black font-thin hover:cursor-pointer hover:bg-gray-100  font-xs rounded-full text-sm  ps-1 pe-1 p-[2px] me-[4px] ${isLinkBtn("2")
                                 ? "bg-white text-red-700 border border-red-700"
                                 : "bg-gray-100 text-black border border-gray-300"
-                            }`}
+                              }`}
                             style={{ fontSize: "10px" }}
                             onClick={() => {
                               handleOnclick("2");
@@ -282,11 +281,10 @@ const Staking = () => {
                             3 Months (400%)
                           </span>
                           <span
-                            className={`text-black bg-gray-100  font-thin hover:cursor-pointer hover:bg-gray-100  font-xs rounded-full text-sm  ps-1 pe-1 p-[2px]  ${
-                              isLinkBtn("3")
+                            className={`text-black bg-gray-100  font-thin hover:cursor-pointer hover:bg-gray-100  font-xs rounded-full text-sm  ps-1 pe-1 p-[2px]  ${isLinkBtn("3")
                                 ? "bg-white text-red-700 border border-red-700"
                                 : "bg-gray-100 text-black border border-gray-300"
-                            }`}
+                              }`}
                             style={{ fontSize: "10px" }}
                             onClick={() => {
                               handleOnclick("3");
@@ -299,15 +297,15 @@ const Staking = () => {
                     </div>
 
                     <div
-                      className="flex   justify-between mt-3 rounded-lg"
+                      className="flex justify-between mt-3 rounded-lg"
                       style={{ background: "rgba(241, 245, 249, 255)" }}
                     >
                       <div className="flex">
                         <Image
-                          className="m-3 mt-3.5 "
+                          className="mt-2"
                           src={icon}
                           alt="Input Icon"
-                          style={{ width: "24px", height: "24px" }}
+                          style={{ width: "32px", height: "32px" }}
                         ></Image>
 
                         <input
@@ -321,14 +319,14 @@ const Staking = () => {
                           style={{ background: "rgba(241, 245, 249, 255)" }}
                         />
                       </div>
-                      <div>
+                      {/* <div>
                         <button
                           type="button"
                           className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm m-3 p-1 ps-3 pe-3 "
                         >
                           Max
                         </button>
-                      </div>
+                      </div> */}
                     </div>
                     <div>
                       {address && chain?.id === 56 ? (
@@ -682,7 +680,7 @@ const Staking = () => {
                   className="text-gray-700  whitespace-nowrap"
                   style={{ fontSize: "13px" }}
                 >
-                  {String(apy) || 0}
+                  {String(apy) || 3500}
                 </p>
               </div>
               <div className="flex justify-between pb-3">

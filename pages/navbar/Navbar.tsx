@@ -41,14 +41,14 @@ const Navbar = () => {
   };
   return (
     <>
-      <nav className="bg-gray-900 flex border-gray-200 justify-between sm:w-full  w-[450px] h-14">
+      <nav className="bg-gray-900 flex border-gray-200 justify-between sm:w-full  w-[450px] h-16">
         <div className="flex flex-wrap items-center ps-10 p-2">
           <Image
-            className="h-8 w-auto"
+            className="h-12 w-auto"
             src={nav_icon}
             alt="Website Logo"
-            width={180}
-            height={37}
+            // width={200}
+            // height={50}
             priority
           />
           <p className="text-white ps-1">Cicca-Defi</p>
