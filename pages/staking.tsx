@@ -57,7 +57,6 @@ const Staking = () => {
       if (typeof provider.getSigner !== "undefined") {
         signer = provider.getSigner();
       }
-      console.log("signer", signer);
     } else {
       console.log(
         "This code should only be executed in a browser environment."
@@ -336,6 +335,7 @@ const Staking = () => {
                       {address && chain?.id === 56 ? (
                         <button
                           type="submit"
+                          suppressHydrationWarning
                           // onClick={() => submitForm}
                           // onClick={() => switchNetwork?.(56)}
                           className="w-full mt-3 flex justify-center text-red-700 border border-red-700 hover:bg-gray-100 focus:outline-none font-normal rounded-lg text-sm px-5 py-2.5 text-center"
@@ -348,6 +348,7 @@ const Staking = () => {
                       ) : address && chain?.id !== 56 ? (
                         <button
                           // type="submit"
+                          suppressHydrationWarning
                           onClick={() => open()}
                           className="w-full mt-3 flex justify-center text-red-700 border border-red-700 hover:bg-gray-100 focus:outline-none font-normal rounded-lg text-sm px-5 py-2.5 text-center"
                         >

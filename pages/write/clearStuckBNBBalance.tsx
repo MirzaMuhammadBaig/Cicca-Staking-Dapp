@@ -12,18 +12,17 @@ export default function ClearStuckBNBBalance() {
   const contract = new ethers.Contract(data, ContractABI, signer);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      provider = new ethers.providers.Web3Provider(
-        (window as any).ethereum
-      );
-      if (typeof provider.getSigner !== 'undefined') {
+    if (typeof window !== "undefined") {
+      provider = new ethers.providers.Web3Provider((window as any).ethereum);
+      if (typeof provider.getSigner !== "undefined") {
         signer = provider.getSigner();
       }
-      console.log("signer", signer)
     } else {
-      console.log("This code should only be executed in a browser environment.");
+      console.log(
+        "This code should only be executed in a browser environment."
+      );
     }
-  })
+  });
 
   const ClearStuckBalance = async (e: any) => {
     e.preventDefault();
@@ -33,9 +32,7 @@ export default function ClearStuckBNBBalance() {
 
     try {
       if ((window as any).ethereum) {
-        provider = new ethers.providers.Web3Provider(
-          (window as any).ethereum
-        );
+        provider = new ethers.providers.Web3Provider((window as any).ethereum);
 
         const accounts = await (window as any).ethereum.request({
           method: "eth_requestAccounts",
@@ -47,22 +44,19 @@ export default function ClearStuckBNBBalance() {
         const signer = provider.getSigner();
 
         try {
-
           setLoading(true);
 
           const tx = await contract
             .connect(signer)
-            .clearStuckBNBBalance(
-              toAddr,
-            );
+            .clearStuckBNBBalance(toAddr);
 
-          console.log('tx', tx)
+          console.log("tx", tx);
           await tx.wait();
 
           setLoading(false);
           alert("Staked");
         } catch (error: any) {
-          console.log(error)
+          console.log(error);
           setLoading(false);
           if (
             error.message &&
@@ -102,8 +96,9 @@ export default function ClearStuckBNBBalance() {
           <div>
             <button
               type="submit"
-              className={`text-white bg-red-700 hover:bg-red-800  font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center ${loading ? "opacity-50 cursor-not-allowed" : ""
-                }`}
+              className={`text-white bg-red-700 hover:bg-red-800  font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center ${
+                loading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
             >
               {loading ? "Processing..." : "Clear Stuck BNB"}
             </button>

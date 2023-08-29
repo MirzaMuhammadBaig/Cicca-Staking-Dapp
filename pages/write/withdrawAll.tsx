@@ -12,18 +12,17 @@ export default function WithdrawAll() {
   const contract = new ethers.Contract(data, ContractABI, signer);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      provider = new ethers.providers.Web3Provider(
-        (window as any).ethereum
-      );
-      if (typeof provider.getSigner !== 'undefined') {
+    if (typeof window !== "undefined") {
+      provider = new ethers.providers.Web3Provider((window as any).ethereum);
+      if (typeof provider.getSigner !== "undefined") {
         signer = provider.getSigner();
       }
-      console.log("signer", signer)
     } else {
-      console.log("This code should only be executed in a browser environment.");
+      console.log(
+        "This code should only be executed in a browser environment."
+      );
     }
-  })
+  });
 
   const withdrawAll = async (e: any) => {
     e.preventDefault();
@@ -34,9 +33,7 @@ export default function WithdrawAll() {
 
     try {
       if ((window as any).ethereum) {
-        provider = new ethers.providers.Web3Provider(
-          (window as any).ethereum
-        );
+        provider = new ethers.providers.Web3Provider((window as any).ethereum);
 
         const accounts = await (window as any).ethereum.request({
           method: "eth_requestAccounts",
@@ -48,17 +45,13 @@ export default function WithdrawAll() {
         const signer = provider.getSigner();
 
         try {
-
           setLoading(true);
 
           const tx = await contract
             .connect(signer)
-            .withdrawAllToken(
-              tokenAddr,
-              toAddr
-            );
+            .withdrawAllToken(tokenAddr, toAddr);
 
-          console.log('tx', tx)
+          console.log("tx", tx);
           await tx.wait();
 
           setLoading(false);
@@ -90,7 +83,6 @@ export default function WithdrawAll() {
   return (
     <>
       <form onSubmit={withdrawAll}>
-
         <div className="flex flex-col justify-center items-center m-6">
           <div>
             <input
@@ -113,8 +105,9 @@ export default function WithdrawAll() {
           <div>
             <button
               type="submit"
-              className={`text-white bg-red-700 hover:bg-red-800  font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center ${loading ? "opacity-50 cursor-not-allowed" : ""
-                }`}
+              className={`text-white bg-red-700 hover:bg-red-800  font-normal rounded-full text-sm p-1 ps-2 pe-2 text-center ${
+                loading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
             >
               {loading ? "Processing..." : "WithdrawAll"}
             </button>

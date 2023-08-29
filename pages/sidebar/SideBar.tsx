@@ -15,8 +15,6 @@ const SideBar = () => {
   // Access the current URL
   const currentUrl = router.asPath;
 
-  console.log("currentUrl", currentUrl);
-
   const handleLinkClick = (link: string) => {
     setActiveLink(link);
   };
