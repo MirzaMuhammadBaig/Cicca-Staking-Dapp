@@ -155,24 +155,24 @@ const Staking = () => {
 
   const faqs = [
     {
-      question: "What are SeiCloud Staking DApps?",
+      question: "What are Cicca-Defi Staking DApps?",
       answer:
-        "SeiCloud Staking DApps are decentralized applications that enable users to participate in the staking process of the SeiCloud network. By staking $SEICLOUD tokens, users contribute to the network's security, consensus, and overall functionality.",
+        "Cicca-Defi Staking DApps are decentralized applications that enable users to participate in the staking process of the CICCA-DEFI network. By staking $CICCA-DEFI tokens, users contribute to the network's security, consensus, and overall functionality.",
     },
     {
-      question: "How does Staking Work in SeiCloud?",
+      question: "How does Staking Work in Cicca-Defi?",
       answer:
-        "Staking in SeiCloud involves locking a certain amount of $SEICLOUD tokens as collateral to support network operations. This contributes to transaction validation and security. In return, stakers receive rewards in the form of additional $SEICLOUD tokens.",
+        "Staking in Cicca-Defi involves locking a certain amount of $CICCA-DEFI tokens as collateral to support network operations. This contributes to transaction validation and security. In return, stakers receive rewards in the form of additional $CICCA-DEFI tokens.",
     },
     {
-      question: "What are the Benefits of Staking in SeiCloud?",
+      question: "What are the Benefits of Staking in Cicca-Defi?",
       answer:
-        "Staking in SeiCloud offers a dual benefit: you earn rewards for your contribution to the network's health and security while supporting the ecosystem's growth. Additionally, you play a role in shaping the network's governance decisions.",
+        "Staking in Cicca-Defi offers a dual benefit: you earn rewards for your contribution to the network's health and security while supporting the ecosystem's growth. Additionally, you play a role in shaping the network's governance decisions.",
     },
     {
-      question: "How Can I Stake My $SEICLOUD Tokens?",
+      question: "How Can I Stake My $CICCA-DEFI Tokens?",
       answer:
-        "To stake your $SEICLOUD tokens, interact with the Staking DApp on the SeiCloud platform. Connect your compatible wallet, choose the amount to stake, and confirm the transaction. Your staked tokens will contribute to the network's consensus.",
+        "To stake your $CICCA-DEFI tokens, interact with the Staking DApp on the Cicca-Defi platform. Connect your compatible wallet, choose the amount to stake, and confirm the transaction. Your staked tokens will contribute to the network's consensus.",
     },
   ];
 
@@ -202,13 +202,13 @@ const Staking = () => {
                         className="text-xs font-medium  whitespace-nowrap"
                         style={{ fontSize: "14px" }}
                       >
-                        Stake SeiCloud
+                        Stake Cicca-Defi
                       </p>
                       <p
                         className="text-gray-700 sm:ps-14 ps-2 whitespace-nowrap"
                         style={{ fontSize: "13px" }}
                       >
-                        Stake SeiCloud and receive SeiCloud while staking
+                        Stake Cicca-Defi and receive Cicca-Defi while staking
                       </p>
                     </div>
 
@@ -227,7 +227,7 @@ const Staking = () => {
                           className="text-xs font-medium p-3"
                           style={{ fontSize: "14px" }}
                         >
-                          0 SeiCloud
+                          0 Cicca-Defi
                         </p>
                       </div>
                       <div className="ps-3 pe-3">
@@ -245,7 +245,7 @@ const Staking = () => {
                           className="text-xs font-medium"
                           style={{ fontSize: "14px" }}
                         >
-                          0 SeiCloud
+                          0 Cicca-Defi
                         </div>
                       </div>
                       <div className="flex justify-between rounded-lg p-3 pt-0">
@@ -253,7 +253,7 @@ const Staking = () => {
                           className="text-gray-700 mt-[2px]"
                           style={{ fontSize: "13px" }}
                         >
-                          SeiCloud APY
+                          Cicca-Defi APY
                         </div>
                         <div className="">
                           <span
@@ -634,11 +634,11 @@ const Staking = () => {
             <div className=" p-5 bg-white border border-gray-200 rounded-lg shadow lg:-ml-3 ml-5 mb-5 sm:mt-5 h-max w-full">
               <div className="flex justify-between pb-3">
                 <p className="text-xs font-medium" style={{ fontSize: "14px" }}>
-                  SeiCloud Statistic
+                Cicca-Defi Statistic
                 </p>
                 <p className="text-gray-700" style={{ fontSize: "13px" }}>
                   <a href="https://seicloud.io/staking" target="blank">
-                    View on Seiscan
+                    View on Cicca-Defi
                   </a>
                 </p>
               </div>
@@ -647,13 +647,13 @@ const Staking = () => {
                   className="text-gray-700 pe-3 whitespace-nowrap"
                   style={{ fontSize: "13px" }}
                 >
-                  Total staked with SeiCloud
+                  Total staked with Cicca-Defi
                 </p>
                 <p
                   className="text-gray-700 ps-3  whitespace-nowrap"
                   style={{ fontSize: "13px" }}
                 >
-                  {String(stakeAmount) || 0} SeiCloud
+                  {String(stakeAmount) || 0} Cicca-Defi
                 </p>
               </div>
               <div className="flex justify-between pb-3">
@@ -662,7 +662,7 @@ const Staking = () => {
                   style={{ fontSize: "13px" }}
                 >
                   {" "}
-                  SeiCloud market cap
+                  Cicca-Defi market cap
                 </p>
                 <p
                   className="text-gray-700  whitespace-nowrap"

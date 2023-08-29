@@ -51,7 +51,7 @@ const Navbar = () => {
             height={37}
             priority
           />
-          <p className="text-white ps-1">SeiCloud</p>
+          <p className="text-white ps-1">Cicca-Defi</p>
         </div>
         <div className="items-center p-2 pe-5 hidden lg:flex">
           <Wallet />
