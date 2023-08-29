@@ -5,10 +5,22 @@ import icon from "../assets/nav-icon.png";
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { BsArrowUpRight } from "react-icons/bs";
-import { useAccount, useConnect, useNetwork, useSwitchNetwork } from "wagmi";
+import {
+  useAccount,
+  useConnect,
+  useContractRead,
+  useNetwork,
+  useSwitchNetwork,
+} from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import img from "../assets/stakePagePic.webp";
-import { ContractABI, ContractAddress } from "../lib/constant.ts";
+import {
+  ContractABI,
+  ContractAddress,
+  OwnerAddress,
+  TokenABI,
+  TokenAddress,
+} from "../lib/constant.ts";
 import UnStake from "./write/unstake.tsx";
 import ClaimMonthlyReward from "./write/claimMonthlyRewars.tsx";
 import WithdrawAll from "./write/withdrawAll.tsx";
@@ -16,10 +28,12 @@ import WithdrawTokenWithAmount from "./write/withdrawTokenWithAmount.tsx";
 import ClearStuckBNBBalance from "./write/clearStuckBNBBalance.tsx";
 import UserStakeInfos from "./write/userStakeInfos.tsx";
 import { useWeb3Modal } from "@web3modal/react";
+// import { parseEther } from "ethers/lib/utils";
+import { useContractWrite, usePrepareContractWrite } from "wagmi";
 
 const Staking = () => {
   // wagmi hooks
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
   const { switchNetwork } = useSwitchNetwork();
   const { chain } = useNetwork();
   const { connect } = useConnect();
@@ -27,19 +41,13 @@ const Staking = () => {
   const { open, close } = useWeb3Modal();
 
   // read Use States
-  const [stakeAmount, setTotalStakedAmount] = useState<any>("");
   const [amount, setAmount] = useState<number | string>("");
-  const [apy, setAPY] = useState<any>("");
-  const [firstTimeReward, setFirstTimeReward] = useState<any>("");
-  const [stakeTime, setStakeTime] = useState<any>("");
-  const [claimTime, setClaimTime] = useState<any>("");
 
   const [activeBtn, setActiceBtn] = useState<string | undefined>("");
   const [activeIndex, setActiveIndex] = useState<null | string | number>(null);
   const [sending, setSending] = useState(false);
 
   let provider: any;
-  let signer: any;
 
   const handleOnclick = (btn: string) => {
     setActiceBtn(btn);
@@ -49,52 +57,48 @@ const Staking = () => {
     setAmount(e.target.value);
   };
 
-  useEffect(() => {
-    setActiceBtn("1");
-    if (typeof window !== "undefined") {
-      provider = "wedrf";
-      // provider = new ethers.providers.Web3Provider((window as any).ethereum);
-      if (typeof provider.getSigner !== "undefined") {
-        signer = provider.getSigner();
-      }
-    } else {
-      console.log(
-        "This code should only be executed in a browser environment."
-      );
-    }
+  // =======================WagMI read Functions================================
+  const { data: stakeAmount } = useContractRead({
+    address: ContractAddress,
+    abi: ContractABI,
+    functionName: "totalStakedAmount",
+  });
 
-    async function readSeiCloudStatistic() {
-      if ((window as any).ethereum) {
-        if (chain?.id === 56) {
-          try {
-            provider = new ethers.providers.Web3Provider(
-              (window as any).ethereum
-            );
-            const contract = new ethers.Contract(
-              ContractAddress,
-              ContractABI,
-              signer
-            );
-            const totalStakedAmount = await contract.totalStakedAmount();
-            setTotalStakedAmount(totalStakedAmount);
-            const APY = await contract.APY();
-            setAPY(APY);
-            const firstTimeReward = await contract.FirstTimeReward();
-            setFirstTimeReward(firstTimeReward);
-            const stakeTime = await contract.StakeTime();
-            setStakeTime(stakeTime);
-            const claimTime = await contract.claimTime();
-            setClaimTime(claimTime);
-          } catch (err: any) {
-            console.log("Error", err);
-          }
-        } else {
-          console.log("Connect to Binance Chain");
-        }
-      }
-    }
-    readSeiCloudStatistic();
-  }, []);
+  const { data: apy } = useContractRead({
+    address: ContractAddress,
+    abi: ContractABI,
+    functionName: "APY",
+  });
+  const { data: firstTimeReward } = useContractRead({
+    address: ContractAddress,
+    abi: ContractABI,
+    functionName: "FirstTimeReward",
+  });
+  const { data: stakeTime } = useContractRead({
+    address: ContractAddress,
+    abi: ContractABI,
+    functionName: "StakeTime",
+  });
+  const { data: claimTime } = useContractRead({
+    address: ContractAddress,
+    abi: ContractABI,
+    functionName: "claimTime",
+  });
+
+  // useEffect(() => {
+  //   setActiceBtn("1");
+  //   if (typeof window !== "undefined") {
+  //     provider = "wedrf";
+  //     // provider = new ethers.providers.Web3Provider((window as any).ethereum);
+  //     if (typeof provider.getSigner !== "undefined") {
+  //       signer = provider.getSigner();
+  //     }
+  //   } else {
+  //     console.log(
+  //       "This code should only be executed in a browser environment."
+  //     );
+  //   }
+  // }, []);
 
   const submitForm = async (e: any) => {
     e.preventDefault();
@@ -146,6 +150,58 @@ const Staking = () => {
     } catch (error) {
       setSending(false);
     }
+  };
+
+  const { data: approve, write } = useContractWrite({
+    address: TokenAddress,
+    abi: TokenABI,
+    functionName: "approve",
+    args: [ContractAddress, "5"],
+  });
+
+  const {
+    data: allowance,
+    isError,
+    isLoading,
+  } = useContractRead({
+    address: TokenAddress,
+    abi: TokenABI,
+    functionName: "allowance",
+    args: [OwnerAddress, ContractAddress],
+  });
+  console.log("🚀 ~ file: staking.tsx:174 ~ Staking ~ allowance:", allowance);
+
+  const approveFunc = async () => {
+    write();
+
+    // =-===============
+    // if ((window as any).bnb) {
+    // if (chain?.id === 56) {
+    //   try {
+    //     provider = new ethers.providers.JsonRpcProvider(
+    //       "https://bsc.publicnode.com"
+    //     );
+    //     signer = provider.getSigner(
+    //       "0x35BE110a0eaA469553718d1f4eb06e8808b614bF"
+    //     );
+
+    //     console.log("sdfgjk END-1");
+    //     const contract = new ethers.Contract(TokenAddress, TokenABI, signer);
+    //     console.log(
+    //       "🚀 ~ file: staking.tsx:171 ~ approveFunc ~ contract:",
+    //       contract
+    //     );
+    //     console.log("sdfgjk END-2");
+
+    //     await contract.approve(ContractAddress, "5");
+    //     console.log("sdfgjk END");
+    //   } catch (err: any) {
+    //     console.log("Error", err);
+    //   }
+    //   // } else {
+    //   //   console.log("Connect to Binance Chain");
+    //   // }
+    // }
   };
 
   const isLinkBtn = (btn: string | undefined) => {
@@ -332,7 +388,7 @@ const Staking = () => {
                       </div> */}
                     </div>
                     <div>
-                      {address && chain?.id === 56 ? (
+                      {address && chain?.id === 56 && (allowance as any) > 0 ? (
                         <button
                           type="submit"
                           suppressHydrationWarning
@@ -341,6 +397,19 @@ const Staking = () => {
                           className="w-full mt-3 flex justify-center text-red-700 border border-red-700 hover:bg-gray-100 focus:outline-none font-normal rounded-lg text-sm px-5 py-2.5 text-center"
                         >
                           Stake
+                          <div className="ms-4 mt-1">
+                            <BsArrowUpRight />
+                          </div>
+                        </button>
+                      ) : address && chain?.id === 56 ? (
+                        <button
+                          type="submit"
+                          suppressHydrationWarning
+                          onClick={approveFunc}
+                          // onClick={() => switchNetwork?.(56)}
+                          className="w-full mt-3 flex justify-center text-red-700 border border-red-700 hover:bg-gray-100 focus:outline-none font-normal rounded-lg text-sm px-5 py-2.5 text-center"
+                        >
+                          Approve
                           <div className="ms-4 mt-1">
                             <BsArrowUpRight />
                           </div>
@@ -374,6 +443,7 @@ const Staking = () => {
                   </div>
                 </form>
               </div>
+
               {/* UnStake */}
               <div className="flex justify-center p-5 pt-0 ">
                 <div className="p-5 pt-3 bg-white border border-gray-200 rounded-lg shadow w-full">
@@ -488,6 +558,7 @@ const Staking = () => {
                 </div>
               </div>
 
+              {/* Withdraw Specific Amount */}
               <div className="flex justify-center p-5 pt-0">
                 <div className="p-5 pt-3 bg-white border border-gray-200 rounded-lg shadow w-full">
                   <p
@@ -525,6 +596,7 @@ const Staking = () => {
                 </div>
               </div>
 
+              {/* Clear Stuck BNB Balance */}
               <div className="flex justify-center p-5 pt-0">
                 <div className="p-5 pt-3 bg-white border border-gray-200 rounded-lg shadow w-full">
                   <p
@@ -562,6 +634,7 @@ const Staking = () => {
                 </div>
               </div>
 
+              {/* Get User Stake Info */}
               <div className="flex justify-center p-5 pt-0">
                 <div className="p-5 pt-3 bg-white border border-gray-200 rounded-lg shadow w-full">
                   <p
@@ -599,6 +672,7 @@ const Staking = () => {
                 </div>
               </div>
 
+              {/* FAQs */}
               <div className="flex justify-center p-5 pt-0">
                 <div className="p-5 pt-3 bg-white border border-gray-200 rounded-lg shadow w-full">
                   <p
@@ -686,7 +760,7 @@ const Staking = () => {
                   className="text-gray-700  whitespace-nowrap"
                   style={{ fontSize: "13px" }}
                 >
-                  {String(apy) || 3500}
+                  {String(apy) || 0}
                 </p>
               </div>
               <div className="flex justify-between pb-3">
