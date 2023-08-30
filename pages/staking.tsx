@@ -644,7 +644,7 @@ const Staking = () => {
               </div>
 
               {/* FAQs */}
-              <div className="flex justify-center p-5 pt-0">
+              <div className="flex justify-center p-5 pt-0 lg:w-[502px]">
                 <div className="p-5 pt-3 bg-white border border-gray-200 rounded-lg shadow w-full">
                   <p
                     className="text-xs font-medium pb-2"
