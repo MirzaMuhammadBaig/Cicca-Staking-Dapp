@@ -149,6 +149,8 @@ const Staking = () => {
             )
           ) {
             alert("You don't have enought Tokens to stake");
+          }else{
+            alert(`Error:\n ${error}`)
           }
         }
       } else {
