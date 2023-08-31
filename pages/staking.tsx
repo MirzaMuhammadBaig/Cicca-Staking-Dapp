@@ -289,9 +289,9 @@ const Staking = () => {
                             style={{ fontSize: "13px" }}
                           >
                             Cicca-Defi APY{" "}
-                            <span className="font-bold"> (3500) </span>
+                            <span className="font-bold"> (35%) </span>
                           </div>
-                          <div className="">
+                          {/* <div className="">
                             <span
                               className={`text-black  font-thin hover:cursor-pointer hover:bg-gray-100  font-xs rounded-full text-sm ps-1 pe-1 p-[2px] me-[4px] ${
                                 isLinkBtn("1")
@@ -331,7 +331,7 @@ const Staking = () => {
                             >
                               6 Month (1000%)
                             </span>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
 
