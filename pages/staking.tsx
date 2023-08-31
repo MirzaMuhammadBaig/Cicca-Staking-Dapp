@@ -191,12 +191,12 @@ const Staking = () => {
     {
       question: "What are Cicca-Defi Staking DApps?",
       answer:
-        "Cicca-Defi Staking DApps are decentralized applications that enable users to participate in the staking process of the CICCA-DEFI network. By staking $CICCA-DEFI tokens, users contribute to the network's security, consensus, and overall functionality.",
+        "Cicca-Defi Staking DApps are decentralized applications that enable users to participate in the staking process of the Cicca-Defi network. By staking $Cicca-Defi tokens, users contribute to the network's security, consensus, and overall functionality.",
     },
     {
       question: "How does Staking Work in Cicca-Defi?",
       answer:
-        "Staking in Cicca-Defi involves locking a certain amount of $CICCA-DEFI tokens as collateral to support network operations. This contributes to transaction validation and security. In return, stakers receive rewards in the form of additional $CICCA-DEFI tokens.",
+        "Staking in Cicca-Defi involves locking a certain amount of $Cicca-Defi tokens as collateral to support network operations. This contributes to transaction validation and security. In return, stakers receive rewards in the form of additional $Cicca-Defi tokens.",
     },
     {
       question: "What are the Benefits of Staking in Cicca-Defi?",
@@ -204,9 +204,9 @@ const Staking = () => {
         "Staking in Cicca-Defi offers a dual benefit: you earn rewards for your contribution to the network's health and security while supporting the ecosystem's growth. Additionally, you play a role in shaping the network's governance decisions.",
     },
     {
-      question: "How Can I Stake My $CICCA-DEFI Tokens?",
+      question: "How Can I Stake My Cicca-Defi Tokens?",
       answer:
-        "To stake your $CICCA-DEFI tokens, interact with the Staking DApp on the Cicca-Defi platform. Connect your compatible wallet, choose the amount to stake, and confirm the transaction. Your staked tokens will contribute to the network's consensus.",
+        "To stake your Cicca-Defi tokens, interact with the Staking DApp on the Cicca-Defi platform. Connect your compatible wallet, choose the amount to stake, and confirm the transaction. Your staked tokens will contribute to the network's consensus.",
     },
   ];
 
@@ -784,13 +784,13 @@ const Staking = () => {
                     {String(claimTime) || 0}
                   </p>
                 </div>
-                <div className="flex justify-center ">
+                {/* <div className="flex justify-center ">
                   <Image
                     src={img}
                     alt="img"
                     className="h-[150px] w-[130px]"
                   ></Image>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
