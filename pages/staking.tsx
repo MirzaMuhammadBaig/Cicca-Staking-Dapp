@@ -46,7 +46,6 @@ const Staking = () => {
 
   // read Use States
   const [amount, setAmount] = useState<string>("");
-  console.log("🚀 ~ file: staking.tsx:49 ~ Staking ~ amount:", amount);
 
   const [activeBtn, setActiceBtn] = useState<string | undefined>("");
   const [activeIndex, setActiveIndex] = useState<null | string | number>(null);
@@ -116,6 +115,8 @@ const Staking = () => {
     args: [amount],
     onError(error) {
       if (error.message.includes("Transfer amount must be greater than zero")) {
+        console.log("🚀 In :", amount);
+
         alert("Stake amount must be greater than zero");
       } else if (
         error.message.includes(
@@ -126,6 +127,11 @@ const Staking = () => {
       }
     },
   });
+  console.log(
+    "🚀 ~ file: staking.tsx:128 ~ Staking ~ amountStake:",
+    amountStake
+  );
+  console.log("🚀 ~ out :", amount);
 
   const submitFunc = async (e: any) => {
     e.preventDefault();
