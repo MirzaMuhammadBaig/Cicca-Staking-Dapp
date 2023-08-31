@@ -151,7 +151,7 @@ const Staking = () => {
     address: TokenAddress,
     abi: TokenABI,
     functionName: "allowance",
-    args: [OwnerAddress, ContractAddress],
+    args: [address, ContractAddress],
   });
 
   const { data: balanceOf } = useContractRead({
