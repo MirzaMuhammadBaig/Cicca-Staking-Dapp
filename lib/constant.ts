@@ -1,6 +1,6 @@
 export const ContractAddress = "0x8dCBba3e63A4b948c72c6602D0F90E969C23607e";
-export const TokenAddress = "0xA4320F7756bDbF4796B77BEa6f2a3432C60F8456 ";
-export const OwnerAddress = "0xb943A3AecC79103fEaFc0573Ea978916cFd5d547 ";
+export const TokenAddress = "0xA4320F7756bDbF4796B77BEa6f2a3432C60F8456";
+export const OwnerAddress = "0xb943A3AecC79103fEaFc0573Ea978916cFd5d547";
 
 export const ContractABI = [
   {

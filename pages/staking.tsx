@@ -31,6 +31,7 @@ import { useWeb3Modal } from "@web3modal/react";
 // import { parseEther } from "ethers/lib/utils";
 import { useContractWrite, usePrepareContractWrite } from "wagmi";
 import useMounted from "./useMounted.tsx";
+import { parseEther } from "ethers/lib/utils";
 
 const Staking = () => {
   // wagmi hooks
@@ -44,7 +45,8 @@ const Staking = () => {
   const { open, close } = useWeb3Modal();
 
   // read Use States
-  const [amount, setAmount] = useState<number | string>("");
+  const [amount, setAmount] = useState<string>("");
+  console.log("🚀 ~ file: staking.tsx:49 ~ Staking ~ amount:", amount);
 
   const [activeBtn, setActiceBtn] = useState<string | undefined>("");
   const [activeIndex, setActiveIndex] = useState<null | string | number>(null);
@@ -107,56 +109,33 @@ const Staking = () => {
   //   }
   // }, []);
 
-  const submitForm = async (e: any) => {
+  const { data: amountStake, write: writeStake } = useContractWrite({
+    address: ContractAddress,
+    abi: ContractABI,
+    functionName: "stake",
+    args: [amount],
+    onError(error) {
+      if (error.message.includes("Transfer amount must be greater than zero")) {
+        alert("Stake amount must be greater than zero");
+      } else if (
+        error.message.includes(
+          "Cicca_Staking: You don't have enought Tokens to stake"
+        )
+      ) {
+        alert("Cicca_Staking: You don't have enought Tokens to stake");
+      }
+    },
+  });
+
+  const submitFunc = async (e: any) => {
     e.preventDefault();
     setSending(true);
 
-    const formData = new FormData(e.target);
-    const stakingAmount = formData.get("amount");
-
     try {
-      if ((window as any).ethereum) {
-        provider = new ethers.providers.Web3Provider((window as any).ethereum);
-
-        const accounts = await (window as any).ethereum.request({
-          method: "eth_requestAccounts",
-        });
-        if (accounts.length === 0) {
-          throw new Error("User denied account access.");
-        }
-
-        const signer = provider.getSigner();
-        const contract = new ethers.Contract(
-          ContractAddress,
-          ContractABI,
-          signer
-        );
-
-        try {
-          const tx = await contract.connect(signer).stake(stakingAmount);
-
-          console.log("tx", tx);
-          await tx.wait();
-
-          setSending(false);
-          alert("Staked");
-        } catch (error: any) {
-          console.log("error", error.error.data.message);
-          if (
-            error.message &&
-            error.error.data.message.includes(
-              "Cicca_Staking: You don't have enought Tokens to stake"
-            )
-          ) {
-            alert("You don't have enought Tokens to stake");
-          }else{
-            alert(`Error:\n ${error}`)
-          }
-        }
-      } else {
-        alert("Please connect to a wallet.");
-      }
-    } catch (error) {
+      writeStake();
+      setSending(false);
+    } catch (error: any) {
+      console.log("🚀rror:", error);
       setSending(false);
     }
   };
@@ -165,22 +144,33 @@ const Staking = () => {
     address: TokenAddress,
     abi: TokenABI,
     functionName: "approve",
-    args: [ContractAddress, "5"],
+    args: [ContractAddress, parseEther(amount || "0")],
   });
 
-  const {
-    data: allowance,
-    isError,
-    isLoading,
-  } = useContractRead({
+  const { data: allowance } = useContractRead({
     address: TokenAddress,
     abi: TokenABI,
     functionName: "allowance",
     args: [OwnerAddress, ContractAddress],
   });
 
+  const { data: balanceOf } = useContractRead({
+    address: TokenAddress,
+    abi: TokenABI,
+    functionName: "balanceOf",
+    args: [address],
+  });
+
   const approveFunc = async () => {
-    write();
+    if (amount > "0") {
+      if (String(allowance) >= amount) {
+        write();
+      } else {
+        alert("you donnot have enough allownace");
+      }
+    } else {
+      alert("Amount must br greater that zero");
+    }
   };
 
   const isLinkBtn = (btn: string | undefined) => {
@@ -230,68 +220,67 @@ const Staking = () => {
               {/* <div className="flex flex-col lg:w-[500px] md:w-[768px]"> */}
               <div className="flex flex-col lg:w-full md:w-[768px]">
                 <div className="flex justify-center align-middle p-5 w-full">
-                  <form onSubmit={submitForm}>
-                    <div className="p-3 bg-white border border-gray-200 rounded-lg shadow  lg:w-[460px] md:w-[725px] w-[410px]">
-                      <div className="flex flex-col sm:flex-row justify-between pb-3">
+                  <div className="p-3 bg-white border border-gray-200 rounded-lg shadow  lg:w-[460px] md:w-[725px] w-[410px]">
+                    <div className="flex flex-col sm:flex-row justify-between pb-3">
+                      <p
+                        className="text-xs font-medium  whitespace-nowrap"
+                        style={{ fontSize: "14px" }}
+                      >
+                        Stake Cicca-Defi
+                      </p>
+                      <p
+                        className="text-gray-700   whitespace-nowrap"
+                        style={{ fontSize: "13px" }}
+                      >
+                        Stake Cicca-Defi and receive Cicca-Defi while staking
+                      </p>
+                    </div>
+
+                    <div
+                      className="w-full rounded-lg"
+                      style={{ background: "rgba(241,245,249,255)" }}
+                    >
+                      <div className="flex justify-between rounded-lg">
                         <p
-                          className="text-xs font-medium  whitespace-nowrap"
-                          style={{ fontSize: "14px" }}
-                        >
-                          Stake Cicca-Defi
-                        </p>
-                        <p
-                          className="text-gray-700   whitespace-nowrap"
+                          className="text-gray-700 p-3"
                           style={{ fontSize: "13px" }}
                         >
-                          Stake Cicca-Defi and receive Cicca-Defi while staking
+                          Available To Stake
+                        </p>
+                        <p
+                          className="text-xs font-medium p-3"
+                          style={{ fontSize: "14px" }}
+                        >
+                          0 Cicca-Defi
                         </p>
                       </div>
-
-                      <div
-                        className="w-full rounded-lg"
-                        style={{ background: "rgba(241,245,249,255)" }}
-                      >
-                        <div className="flex justify-between rounded-lg">
-                          <p
-                            className="text-gray-700 p-3"
-                            style={{ fontSize: "13px" }}
-                          >
-                            Available To Stake
-                          </p>
-                          <p
-                            className="text-xs font-medium p-3"
-                            style={{ fontSize: "14px" }}
-                          >
-                            0 Cicca-Defi
-                          </p>
+                      <div className="ps-3 pe-3">
+                        <hr />
+                        <hr />
+                      </div>
+                      <div className="flex justify-between rounded-lg p-3">
+                        <div
+                          className="text-gray-700"
+                          style={{ fontSize: "13px" }}
+                        >
+                          Staked Amount
                         </div>
-                        <div className="ps-3 pe-3">
-                          <hr />
-                          <hr />
+                        <div
+                          className="text-xs font-medium"
+                          style={{ fontSize: "14px" }}
+                        >
+                          0 Cicca-Defi
                         </div>
-                        <div className="flex justify-between rounded-lg p-3">
-                          <div
-                            className="text-gray-700"
-                            style={{ fontSize: "13px" }}
-                          >
-                            Staked Amount
-                          </div>
-                          <div
-                            className="text-xs font-medium"
-                            style={{ fontSize: "14px" }}
-                          >
-                            0 Cicca-Defi
-                          </div>
+                      </div>
+                      <div className="flex justify-between rounded-lg p-3 pt-0">
+                        <div
+                          className="text-gray-700 mt-[2px]"
+                          style={{ fontSize: "13px" }}
+                        >
+                          Cicca-Defi APY{" "}
+                          <span className="font-bold"> (35%) </span>
                         </div>
-                        <div className="flex justify-between rounded-lg p-3 pt-0">
-                          <div
-                            className="text-gray-700 mt-[2px]"
-                            style={{ fontSize: "13px" }}
-                          >
-                            Cicca-Defi APY{" "}
-                            <span className="font-bold"> (35%) </span>
-                          </div>
-                          {/* <div className="">
+                        {/* <div className="">
                             <span
                               className={`text-black  font-thin hover:cursor-pointer hover:bg-gray-100  font-xs rounded-full text-sm ps-1 pe-1 p-[2px] me-[4px] ${
                                 isLinkBtn("1")
@@ -332,33 +321,33 @@ const Staking = () => {
                               6 Month (1000%)
                             </span>
                           </div> */}
-                        </div>
                       </div>
+                    </div>
 
-                      <div
-                        className="flex justify-between mt-3 rounded-lg"
-                        style={{ background: "rgba(241, 245, 249, 255)" }}
-                      >
-                        <div className="flex">
-                          <Image
-                            className="mt-2"
-                            src={icon}
-                            alt="Input Icon"
-                            style={{ width: "32px", height: "32px" }}
-                          ></Image>
+                    <div
+                      className="flex justify-between mt-3 rounded-lg"
+                      style={{ background: "rgba(241, 245, 249, 255)" }}
+                    >
+                      <div className="flex">
+                        <Image
+                          className="mt-2"
+                          src={icon}
+                          alt="Input Icon"
+                          style={{ width: "32px", height: "32px" }}
+                        ></Image>
 
-                          <input
-                            type="text"
-                            name="amount"
-                            id="amount"
-                            value={amount}
-                            onChange={STAKEAMOUNT}
-                            className="text-black text-xs rounded-lg block w-auto mt-1.5 pt-2 p-2.5 focus:outline-none"
-                            placeholder="Amount"
-                            style={{ background: "rgba(241, 245, 249, 255)" }}
-                          />
-                        </div>
-                        {/* <div>
+                        <input
+                          type="text"
+                          name="amount"
+                          id="amount"
+                          value={amount}
+                          onChange={STAKEAMOUNT}
+                          className="text-black text-xs rounded-lg block w-auto mt-1.5 pt-2 p-2.5 focus:outline-none"
+                          placeholder="Amount"
+                          style={{ background: "rgba(241, 245, 249, 255)" }}
+                        />
+                      </div>
+                      {/* <div>
                         <button
                           type="button"
                           className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm m-3 p-1 ps-3 pe-3 "
@@ -366,64 +355,63 @@ const Staking = () => {
                           Max
                         </button>
                       </div> */}
-                      </div>
-                      <div>
-                        {address &&
-                        chain?.id === 56 &&
-                        (allowance as any) > 0 ? (
-                          <button
-                            type="submit"
-                            suppressHydrationWarning
-                            // onClick={() => submitForm}
-                            // onClick={() => switchNetwork?.(56)}
-                            className="w-full mt-3 flex justify-center text-red-700 border border-red-700 hover:bg-gray-100 focus:outline-none font-normal rounded-lg text-sm px-5 py-2.5 text-center"
-                          >
-                            Stake
-                            <div className="ms-4 mt-1">
-                              <BsArrowUpRight />
-                            </div>
-                          </button>
-                        ) : address && chain?.id === 56 ? (
-                          <button
-                            type="submit"
-                            suppressHydrationWarning
-                            onClick={approveFunc}
-                            // onClick={() => switchNetwork?.(56)}
-                            className="w-full mt-3 flex justify-center text-red-700 border border-red-700 hover:bg-gray-100 focus:outline-none font-normal rounded-lg text-sm px-5 py-2.5 text-center"
-                          >
-                            Approve
-                            <div className="ms-4 mt-1">
-                              <BsArrowUpRight />
-                            </div>
-                          </button>
-                        ) : address && chain?.id !== 56 ? (
-                          <button
-                            // type="submit"
-                            suppressHydrationWarning
-                            onClick={() => open()}
-                            className="w-full mt-3 flex justify-center text-red-700 border border-red-700 hover:bg-gray-100 focus:outline-none font-normal rounded-lg text-sm px-5 py-2.5 text-center"
-                          >
-                            SWITCH TO BINANCE SMART CHAIN
-                            <div className="ms-4 mt-1">
-                              <BsArrowUpRight />
-                            </div>
-                          </button>
-                        ) : (
-                          <>
-                            <button
-                              suppressHydrationWarning
-                              onClick={() =>
-                                connect({ connector: new InjectedConnector() })
-                              }
-                              className="w-full mt-3 flex justify-center text-red-700 border border-red-700 hover:bg-gray-100 focus:outline-none font-normal rounded-lg text-sm px-5 py-2.5 text-center"
-                            >
-                              Connect wallet
-                            </button>
-                          </>
-                        )}
-                      </div>
                     </div>
-                  </form>
+
+                    <div>
+                      {address &&
+                      chain?.id === 56 &&
+                      (allowance as any) > 0 &&
+                      (balanceOf as any) > 0 ? (
+                        <button
+                          suppressHydrationWarning
+                          onClick={submitFunc}
+                          // onClick={() => switchNetwork?.(56)}
+                          className="w-full mt-3 flex justify-center text-red-700 border border-red-700 hover:bg-gray-100 focus:outline-none font-normal rounded-lg text-sm px-5 py-2.5 text-center"
+                        >
+                          Stake
+                          <div className="ms-4 mt-1">
+                            <BsArrowUpRight />
+                          </div>
+                        </button>
+                      ) : address && chain?.id === 56 ? (
+                        <button
+                          suppressHydrationWarning
+                          onClick={approveFunc}
+                          // onClick={() => switchNetwork?.(56)}
+                          className="w-full mt-3 flex justify-center text-red-700 border border-red-700 hover:bg-gray-100 focus:outline-none font-normal rounded-lg text-sm px-5 py-2.5 text-center"
+                        >
+                          Approve
+                          <div className="ms-4 mt-1">
+                            <BsArrowUpRight />
+                          </div>
+                        </button>
+                      ) : address && chain?.id !== 56 ? (
+                        <button
+                          // type="submit"
+                          suppressHydrationWarning
+                          onClick={() => open()}
+                          className="w-full mt-3 flex justify-center text-red-700 border border-red-700 hover:bg-gray-100 focus:outline-none font-normal rounded-lg text-sm px-5 py-2.5 text-center"
+                        >
+                          SWITCH TO BINANCE SMART CHAIN
+                          <div className="ms-4 mt-1">
+                            <BsArrowUpRight />
+                          </div>
+                        </button>
+                      ) : (
+                        <>
+                          <button
+                            suppressHydrationWarning
+                            onClick={() =>
+                              connect({ connector: new InjectedConnector() })
+                            }
+                            className="w-full mt-3 flex justify-center text-red-700 border border-red-700 hover:bg-gray-100 focus:outline-none font-normal rounded-lg text-sm px-5 py-2.5 text-center"
+                          >
+                            Connect wallet
+                          </button>
+                        </>
+                      )}
+                    </div>
+                  </div>
                 </div>
 
                 {/* UnStake */}
