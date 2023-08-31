@@ -163,11 +163,11 @@ const Staking = () => {
 
   const approveFunc = async () => {
     if (amount > "0") {
-      if (String(allowance) >= amount) {
-        write();
-      } else {
-        alert("you don't have enough Ciicca balance");
-      }
+      // if (String(allowance) >= amount) {
+      write();
+      // } else {
+      // alert("you don't have enough Ciicca balance");
+      // }
     } else {
       alert("Amount must br greater that zero");
     }
