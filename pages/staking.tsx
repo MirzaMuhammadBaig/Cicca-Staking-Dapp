@@ -166,7 +166,7 @@ const Staking = () => {
       if (String(allowance) >= amount) {
         write();
       } else {
-        alert("you don't have enough allownace");
+        alert("you don't have enough Ciicca balance");
       }
     } else {
       alert("Amount must br greater that zero");
