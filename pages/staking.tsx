@@ -45,7 +45,7 @@ const Staking = () => {
   const { open, close } = useWeb3Modal();
 
   // read Use States
-  const [amount, setAmount] = useState<string>("");
+  const [amount, setAmount] = useState<any>("");
 
   const [activeBtn, setActiceBtn] = useState<string | undefined>("");
   const [activeIndex, setActiveIndex] = useState<null | string | number>(null);
@@ -108,14 +108,24 @@ const Staking = () => {
   //   }
   // }, []);
 
+  const decimals = 18;
+  const userInputBigInt = BigInt(amount * 10 ** decimals);
+  console.log(
+    "🚀 ~ file: staking.tsx:113 ~ Staking ~ userInputBigInt:",
+    userInputBigInt
+  );
+  const weiValue = userInputBigInt * BigInt(1);
+
+  console.log("Wei Value:", weiValue.toString());
+
   const { data: amountStake, write: writeStake } = useContractWrite({
     address: ContractAddress,
     abi: ContractABI,
     functionName: "stake",
-    args: [amount],
+    args: [weiValue.toString()],
     onError(error) {
       if (error.message.includes("Transfer amount must be greater than zero")) {
-        console.log("🚀 In :", amount);
+        console.log("🚀 In :", weiValue.toString());
 
         alert("Stake amount must be greater than zero");
       } else if (
@@ -366,8 +376,8 @@ const Staking = () => {
                     <div>
                       {address &&
                       chain?.id === 56 &&
-                      (allowance as any) > 0 &&
-                      (balanceOf as any) > 0 ? (
+                      (allowance as any) >= 0 &&
+                      (balanceOf as any) >= 0 ? (
                         <button
                           suppressHydrationWarning
                           onClick={submitFunc}
