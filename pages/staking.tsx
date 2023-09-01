@@ -40,7 +40,6 @@ const Staking = () => {
   const { chain } = useNetwork();
   const { connect } = useConnect();
   const mounted = useMounted();
-  console.log("🚀 ~ file: staking.tsx:42 ~ Staking ~ mounted:", mounted);
 
   const { open, close } = useWeb3Modal();
 
@@ -62,11 +61,20 @@ const Staking = () => {
   };
 
   // =======================WagMI read Functions Start================================
-  const { data: stakeAmount } = useContractRead({
-    address: ContractAddress,
-    abi: ContractABI,
-    functionName: "totalStakedAmount",
-  });
+  const { data: stakeAmount, isLoading: stakeAmountisLoading } =
+    useContractRead({
+      address: ContractAddress,
+      abi: ContractABI,
+      functionName: "totalStakedAmount",
+    });
+  if (stakeAmount === undefined) {
+    console.log("Loading============");
+  } else {
+    console.log(
+      "🚀 ~ file: staking.tsx:70 ~ Staking ~ stakeAmount:",
+      formatEther(String(stakeAmount))
+    );
+  }
 
   const { data: apy } = useContractRead({
     address: ContractAddress,
@@ -92,21 +100,6 @@ const Staking = () => {
     functionName: "claimTime",
   });
   // =======================WagMI read Functions End================================
-
-  // useEffect(() => {
-  //   setActiceBtn("1");
-  //   if (typeof window !== "undefined") {
-  //     provider = "wedrf";
-  //     // provider = new ethers.providers.Web3Provider((window as any).ethereum);
-  //     if (typeof provider.getSigner !== "undefined") {
-  //       signer = provider.getSigner();
-  //     }
-  //   } else {
-  //     console.log(
-  //       "This code should only be executed in a browser environment."
-  //     );
-  //   }
-  // }, []);
 
   const decimals = 18;
   const userInputBigInt = BigInt(amount * 10 ** decimals);
@@ -134,7 +127,7 @@ const Staking = () => {
         )
       ) {
         alert("Cicca_Staking: You don't have enought Tokens to stake");
-      } 
+      }
     },
   });
   console.log(
@@ -693,7 +686,6 @@ const Staking = () => {
 
             {/* Second Column */}
             <div className="flex order-1 lg:order-2  lg:w-full md:w-[748px] w-[432px]">
-              {/* <div className="flex order-1 lg:order-2  lg:w-[432px] md:w-[748px] w-[432px]"> */}
               <div className=" p-5 bg-white border border-gray-200 rounded-lg shadow lg:-ml-3 ml-5 mb-5 sm:mt-5 h-max w-full">
                 <div className="flex justify-between pb-3">
                   <p
@@ -719,8 +711,11 @@ const Staking = () => {
                     className="text-gray-700 ps-3  whitespace-nowrap"
                     style={{ fontSize: "13px" }}
                   >
-                    {formatEther("100000000000000000000" || 0)} Cicca-Defi
-                    {/* {formatEther(String(stakeAmount))} Cicca-Defi */}
+                    {stakeAmount === undefined ? (
+                      <p>0 Cicca-Defi</p>
+                    ) : (
+                      <p>{`${formatEther(String(stakeAmount))} Cicca-Defi`}</p>
+                    )}
                   </p>
                 </div>
                 <div className="flex justify-between pb-3">
