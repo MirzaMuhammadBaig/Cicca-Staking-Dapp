@@ -31,7 +31,7 @@ import { useWeb3Modal } from "@web3modal/react";
 // import { parseEther } from "ethers/lib/utils";
 import { useContractWrite, usePrepareContractWrite } from "wagmi";
 import useMounted from "./useMounted.tsx";
-import { parseEther } from "ethers/lib/utils";
+import { formatEther, parseEther } from "ethers/lib/utils";
 
 const Staking = () => {
   // wagmi hooks
@@ -719,7 +719,8 @@ const Staking = () => {
                     className="text-gray-700 ps-3  whitespace-nowrap"
                     style={{ fontSize: "13px" }}
                   >
-                    {String(stakeAmount) || 0} Cicca-Defi
+                    {/* {formatEther("10000000000000000000" || 0)} Cicca-Defi */}
+                    {formatEther(String(stakeAmount) || 0)} Cicca-Defi
                   </p>
                 </div>
                 <div className="flex justify-between pb-3">
