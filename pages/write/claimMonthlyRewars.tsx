@@ -34,6 +34,12 @@ function ClaimMonthlyReward() {
           )
         ) {
           alert("Cicca_Staking: You don't have any reward to claim");
+        } else if (
+          error.message.includes(
+            "Cicca_Staking: You can not claim rewards before 30 days"
+          )
+        ) {
+          alert("Cicca_Staking: You can not claim rewards before 30 days");
         } else {
           alert(error)
         }
