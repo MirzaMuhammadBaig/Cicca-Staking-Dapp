@@ -719,8 +719,8 @@ const Staking = () => {
                     className="text-gray-700 ps-3  whitespace-nowrap"
                     style={{ fontSize: "13px" }}
                   >
-                    {/* {formatEther("10000000000000000000" || 0)} Cicca-Defi */}
-                    {formatEther(String(stakeAmount) || 0)} Cicca-Defi
+                    {formatEther("100000000000000000000" || 0)} Cicca-Defi
+                    {/* {formatEther(String(stakeAmount))} Cicca-Defi */}
                   </p>
                 </div>
                 <div className="flex justify-between pb-3">
