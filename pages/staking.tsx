@@ -376,8 +376,8 @@ const Staking = () => {
                     <div>
                       {address &&
                       chain?.id === 56 &&
-                      (allowance as any) >= 0 &&
-                      (balanceOf as any) >= 0 ? (
+                      (allowance as any) > 0 &&
+                      (balanceOf as any) > 0 ? (
                         <button
                           suppressHydrationWarning
                           onClick={submitFunc}
