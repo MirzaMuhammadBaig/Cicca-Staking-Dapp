@@ -67,8 +67,12 @@ export default function WithdrawTokenWithAmount() {
             )
           ) {
             alert("Caller is not the owner");
-          } else if (error.error.data.message) {
-            alert(error.error.data.message);
+          } else if (
+            error.message.includes(
+              "Cicca_Staking: Not Enough token balance"
+            )
+          ) {
+            alert("Cicca_Staking: Not Enough token balance");
           } else {
             alert(error);
           }

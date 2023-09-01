@@ -28,6 +28,12 @@ function ClaimMonthlyReward() {
           )
         ) {
           alert("You don't have any reward to claim");
+        } else if (
+          error.message.includes(
+            "Cicca_Staking: You don't have any reward to claim"
+          )
+        ) {
+          alert("Cicca_Staking: You don't have any reward to claim");
         } else {
           alert(error)
         }

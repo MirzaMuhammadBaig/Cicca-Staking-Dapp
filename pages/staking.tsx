@@ -134,7 +134,7 @@ const Staking = () => {
         )
       ) {
         alert("Cicca_Staking: You don't have enought Tokens to stake");
-      }
+      } 
     },
   });
   console.log(

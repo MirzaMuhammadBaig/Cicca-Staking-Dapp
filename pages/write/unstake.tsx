@@ -28,6 +28,12 @@ function UnStake() {
           )
         ) {
           alert("You didn't staked");
+        } else if (
+          error.message.includes(
+            "Cicca_Staking: Tokens are only available after correct time period has elapsed"
+          )
+        ) {
+          alert("Cicca_Staking: Tokens are only available after correct time period has elapsed");
         } else {
           alert(error)
         }
